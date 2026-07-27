@@ -952,7 +952,7 @@
           <a href="#reservas" class="btn">Reservar mi turno</a>
           <a href="#servicios" class="btn btn-ghost">Ver servicios y precios</a>
         </div>
-        <p class="hero-note">Av. Manuel Belgrano 3821, Sarandí · Lunes a sábado, 10:00–20:00</p>
+        <p class="hero-note">Av. Manuel Belgrano 3821, Sarandí · Lunes a sábado, 10:00–19:00</p>
       </div>
       <div class="hero-visual">
         <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
@@ -1189,7 +1189,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
             <div>
               <h4>Horario</h4>
-              <p>Lunes a sábado — 10:00 a 20:00 h<br>Solo con turno reservado</p>
+              <p>Lunes a sábado — 10:00 a 19:00 h<br>Solo con turno reservado</p>
             </div>
           </div>
           <div class="item">
@@ -1373,10 +1373,10 @@
     return days;
   }
 
-  // 10:00 a 20:00, turnos fijos de 30 minutos
+  // 10:00 a 19:00, turnos fijos de 30 minutos (último turno 18:30)
   function generateSlots(){
     const slots = [];
-    for(let total = 10*60; total < 20*60; total += 30){
+    for(let total = 10*60; total <= 18*60+30; total += 30){
       const h = String(Math.floor(total/60)).padStart(2,'0');
       const m = String(total%60).padStart(2,'0');
       slots.push(`${h}:${m}`);
