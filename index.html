@@ -2,70 +2,80 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BLEUR — Barbería &amp; Club de Caballeros</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLEUR — Barbería de Precisión · Sarandí</title>
+<meta name="description" content="BLEUR Barbería — Av. Manuel Belgrano 3821, Sarandí. Cortes de precisión, barba y reservas online en turnos de 30 minutos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --ink:#0B1633;
-    --ink-2:#101F47;
-    --bleur:#2A46C7;
-    --bleur-deep:#1B2E8F;
-    --brass:#C6A15B;
-    --brass-soft:#E4CFA0;
-    --ivory:#F4F0E6;
-    --ivory-dim:#E7E1D2;
-    --charcoal:#15161A;
-    --line: rgba(244,240,230,0.12);
-    --card: rgba(244,240,230,0.045);
-    --card-hover: rgba(244,240,230,0.075);
-    --field: rgba(244,240,230,0.07);
-    --r-lg: 26px;
-    --r-md: 18px;
-    --r-sm: 12px;
-    --shadow: 0 14px 40px rgba(4,9,26,.45);
-    --ease: cubic-bezier(.22,1,.36,1);
-    --safe-t: env(safe-area-inset-top, 0px);
-    --safe-b: env(safe-area-inset-bottom, 0px);
+    --ink:#05060A;
+    --ink-2:#0A0D16;
+    --surface:#10141F;
+    --surface-2:#151A28;
+    --elec:#0057FF;
+    --elec-bright:#2E8FFF;
+    --elec-glow:rgba(0,87,255,.45);
+    --ivory:#F4F6FA;
+    --muted:#8B93A7;
+    --muted-dim:#5B6274;
+    --line:rgba(244,246,250,.10);
+    --line-soft:rgba(244,246,250,.06);
+    --danger:#FF6B6B;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --r-sm:10px;
+    --r-md:16px;
+    --r-lg:24px;
+    --r-pill:999px;
   }
 
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     background:var(--ink);
     color:var(--ivory);
-    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-weight:400;
+    font-family:'Inter',sans-serif;
+    font-weight:300;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
-    line-height:1.5;
   }
   img{max-width:100%;display:block;}
   a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;}
-  ::selection{background:var(--brass);color:var(--ink);}
+  ::selection{background:var(--elec);color:var(--ivory);}
+  button, input, select{font:inherit;}
 
   .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:var(--elec-bright);
     display:inline-flex;
     align-items:center;
-    font-weight:600;
-    letter-spacing:.02em;
-    font-size:.78rem;
-    color:var(--brass-soft);
-    background:rgba(198,161,91,.14);
-    padding:.4rem .9rem;
-    border-radius:999px;
+    gap:.6rem;
+  }
+  .eyebrow::before{
+    content:'';
+    width:26px;height:2px;
+    background:var(--elec);
+    border-radius:var(--r-pill);
+    display:inline-block;
   }
 
   h1,h2,h3{
-    font-weight:700;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
     line-height:1.08;
-    letter-spacing:-.02em;
+    letter-spacing:-.01em;
   }
 
   .container{
-    max-width:1180px;
+    max-width:1240px;
     margin:0 auto;
-    padding:0 5.5vw;
+    padding:0 6vw;
   }
 
   /* ---------- progress line ---------- */
@@ -83,7 +93,8 @@
     top:0;left:0;
     height:100%;
     width:var(--progress,0%);
-    background:linear-gradient(90deg,var(--brass),var(--brass-soft));
+    background:linear-gradient(90deg,var(--elec),var(--elec-bright));
+    box-shadow:0 0 14px var(--elec-glow);
     transition:width .08s linear;
   }
 
@@ -92,422 +103,719 @@
     position:fixed;
     top:0;left:0;right:0;
     z-index:1000;
-    padding:calc(1.1rem + var(--safe-t)) 0 1.1rem;
+    padding:1.5rem 0;
     transition:padding .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
     border-bottom:1px solid transparent;
   }
   header.scrolled{
-    background:rgba(11,22,51,.78);
-    backdrop-filter:blur(20px) saturate(150%);
-    -webkit-backdrop-filter:blur(20px) saturate(150%);
+    padding:.9rem 0;
+    background:rgba(5,6,10,.82);
+    backdrop-filter:blur(16px);
     border-bottom:1px solid var(--line);
   }
   header .container{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:1rem;
   }
   .brandmark{
-    font-weight:800;
-    font-size:1.3rem;
-    letter-spacing:-.02em;
+    display:inline-flex;
+    align-items:center;
+    gap:.65rem;
+  }
+  .brandmark .badge{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1.5px solid var(--elec-bright);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--elec-bright);
+    box-shadow:0 0 16px var(--elec-glow);
+    flex-shrink:0;
+  }
+  .brandmark .word{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:1.35rem;
+    letter-spacing:.01em;
     color:var(--ivory);
   }
-  .brandmark span{color:var(--brass);}
   nav.mainnav{
     display:flex;
     align-items:center;
-    gap:2rem;
+    gap:2.4rem;
   }
-  nav.mainnav a.navlink{
-    font-size:.92rem;
-    font-weight:500;
-    color:var(--ivory-dim);
+  nav.mainnav a:not(.btn){
+    font-size:.8rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    position:relative;
+    padding-bottom:4px;
+    transition:color .3s var(--ease);
   }
-  nav.mainnav a.navlink:hover{color:var(--ivory);}
+  nav.mainnav a:not(.btn)::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:0;
+    width:0;height:2px;
+    background:var(--elec-bright);
+    border-radius:var(--r-pill);
+    transition:width .35s var(--ease);
+  }
+  nav.mainnav a:not(.btn):hover{color:var(--ivory);}
+  nav.mainnav a:not(.btn):hover::after{width:100%;}
 
   .btn{
     display:inline-flex;
     align-items:center;
-    justify-content:center;
     gap:.5rem;
+    font-family:'Space Grotesk',sans-serif;
     font-weight:600;
-    font-size:.92rem;
-    letter-spacing:-.01em;
-    padding:.85rem 1.5rem;
-    border-radius:999px;
-    border:none;
-    color:var(--ink);
-    background:linear-gradient(180deg, var(--brass-soft), var(--brass));
+    font-size:.8rem;
+    letter-spacing:.03em;
+    padding:.85rem 1.7rem;
+    border:1px solid var(--elec);
+    border-radius:var(--r-pill);
+    color:var(--ivory);
+    background:var(--elec);
     cursor:pointer;
-    transition:transform .2s var(--ease), opacity .2s var(--ease);
+    position:relative;
+    overflow:hidden;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
+    box-shadow:0 0 0 rgba(0,87,255,0);
   }
-  .btn:hover{opacity:.92;}
-  .btn:active{transform:scale(.96);}
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px -8px var(--elec-glow);
+    background:var(--elec-bright);
+  }
+  .btn:active{transform:translateY(0);}
   .btn-ghost{
-    background:rgba(244,240,230,.08);
+    background:transparent;
+    border-color:var(--line);
     color:var(--ivory);
   }
-  .btn-ghost:hover{background:rgba(244,240,230,.14);}
-  .btn-sm{padding:.6rem 1.1rem; font-size:.82rem;}
-  .btn-block{width:100%;}
+  .btn-ghost:hover{
+    border-color:var(--elec-bright);
+    background:rgba(0,87,255,.08);
+    box-shadow:none;
+  }
+  .btn:disabled{opacity:.5; cursor:not-allowed; transform:none; box-shadow:none;}
 
   /* ---------- hero ---------- */
   .hero{
-    min-height:92svh;
+    min-height:100svh;
     display:flex;
     align-items:center;
     position:relative;
-    padding-top:calc(6.5rem + var(--safe-t));
-    padding-bottom:2.5rem;
+    padding-top:6rem;
     background:
-      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(42,70,199,.4), transparent 60%),
+      radial-gradient(ellipse 70% 55% at 55% -8%, rgba(0,87,255,.28), transparent 62%),
       linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(244,246,250,.02) 0 1px, transparent 1px 90px);
+    pointer-events:none;
   }
   .hero-grid{
     display:grid;
-    grid-template-columns:1.1fr .9fr;
-    gap:3.5rem;
+    grid-template-columns:1.15fr .85fr;
+    gap:4rem;
     align-items:center;
     width:100%;
+    position:relative;
+    z-index:2;
   }
-  .hero-kicker{margin-bottom:1.4rem;}
+  .hero-kicker{margin-bottom:1.6rem;}
   .hero h1{
-    font-size:clamp(2.2rem, 4.8vw, 3.4rem);
+    font-size:clamp(2.6rem, 5vw, 4.6rem);
     color:var(--ivory);
   }
-  .hero h1 .hl{color:var(--brass-soft);}
+  .hero h1 em{
+    font-style:italic;
+    color:var(--elec-bright);
+  }
   .hero p.lede{
-    margin-top:1.2rem;
+    margin-top:1.8rem;
     max-width:38ch;
-    font-size:1rem;
-    line-height:1.6;
-    color:var(--ivory-dim);
-    font-weight:400;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:var(--muted);
+    font-weight:300;
   }
   .hero-cta{
-    margin-top:1.8rem;
+    margin-top:2.4rem;
     display:flex;
-    gap:.9rem;
+    gap:1rem;
     align-items:center;
     flex-wrap:wrap;
   }
   .hero-note{
-    margin-top:1.2rem;
-    font-size:.82rem;
-    color:rgba(244,240,230,.55);
+    margin-top:1.4rem;
+    font-size:.78rem;
+    letter-spacing:.03em;
+    color:var(--muted-dim);
   }
 
+  /* signature hero visual: engineered blade + 30-min dial, no stock photography */
   .hero-visual{
     position:relative;
+    aspect-ratio:1/1;
+    max-width:460px;
+    margin:0 auto;
   }
-  .hero-visual .imgph{
-    aspect-ratio:4/5;
-    border-radius:var(--r-lg);
-    overflow:hidden;
-    box-shadow:var(--shadow);
-  }
+  .hero-visual svg{width:100%;height:100%;display:block;}
   .hero-stats{
-    display:flex;
-    gap:.7rem;
-    margin-top:1rem;
-  }
-  .stat-chip{
-    flex:1;
-    background:var(--card);
+    position:absolute;
+    left:-1.2rem;
+    bottom:-1.4rem;
+    background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-md);
-    padding:1rem 1.1rem;
-    text-align:left;
+    padding:1.3rem 1.6rem;
+    z-index:3;
+    min-width:180px;
+    backdrop-filter:blur(8px);
   }
-  .stat-chip .num{
-    font-weight:800;
-    font-size:1.4rem;
-    color:var(--brass-soft);
+  .hero-stats .num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:1.7rem;
+    color:var(--elec-bright);
     display:block;
   }
-  .stat-chip .lbl{
+  .hero-stats .lbl{
+    font-size:.7rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
     margin-top:.2rem;
-    font-size:.72rem;
-    color:var(--ivory-dim);
-    line-height:1.3;
   }
 
-  /* ---------- image placeholder ---------- */
-  .imgph{
-    background:
-      linear-gradient(135deg, rgba(42,70,199,.25), rgba(11,22,51,.6));
+  .scroll-cue{
+    position:absolute;
+    bottom:2.4rem;
+    left:50%;
+    transform:translateX(-50%);
     display:flex;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
-    position:relative;
-  }
-  .imgph.has-photo img{
-    width:100%;height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .imgph.has-photo::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(11,22,51,0) 45%, rgba(11,22,51,.7) 100%);
-    z-index:1;
-    pointer-events:none;
-  }
-  .imgph.has-photo .ph-caption{
-    position:absolute;
-    left:0; right:0; bottom:0;
+    gap:.6rem;
     z-index:2;
-    padding:1rem 1.15rem;
-    text-align:left;
   }
-  .imgph.has-photo .ph-caption small{
-    color:rgba(244,240,230,.85);
-    font-size:.72rem;
-    letter-spacing:.02em;
+  .scroll-cue .line{
+    width:1px;height:46px;
+    background:linear-gradient(180deg, var(--elec-bright), transparent);
+    animation:cuepulse 2.2s var(--ease) infinite;
+  }
+  .scroll-cue span{
+    font-size:.66rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  @keyframes cuepulse{
+    0%{opacity:.2; transform:scaleY(.4); transform-origin:top;}
+    50%{opacity:1; transform:scaleY(1); transform-origin:top;}
+    100%{opacity:.2; transform:scaleY(.4); transform-origin:top;}
   }
 
   /* ---------- reveal ---------- */
   .reveal{
     opacity:0;
-    transform:translateY(22px);
-    transition:opacity .7s var(--ease), transform .7s var(--ease);
+    transform:translateY(30px);
+    transition:opacity .8s var(--ease), transform .8s var(--ease);
   }
   .reveal.in{opacity:1; transform:translateY(0);}
   .reveal-stagger .reveal:nth-child(1){transition-delay:0s;}
-  .reveal-stagger .reveal:nth-child(2){transition-delay:.08s;}
-  .reveal-stagger .reveal:nth-child(3){transition-delay:.16s;}
-  .reveal-stagger .reveal:nth-child(4){transition-delay:.24s;}
+  .reveal-stagger .reveal:nth-child(2){transition-delay:.1s;}
+  .reveal-stagger .reveal:nth-child(3){transition-delay:.2s;}
+  .reveal-stagger .reveal:nth-child(4){transition-delay:.3s;}
 
   /* ---------- section shell ---------- */
   section{
-    padding:4.5rem 0;
+    padding:8rem 0;
     position:relative;
   }
   .section-head{
-    max-width:600px;
-    margin-bottom:2.2rem;
+    max-width:640px;
+    margin-bottom:4rem;
   }
   .section-head h2{
-    font-size:clamp(1.7rem, 3vw, 2.3rem);
-    margin-top:.8rem;
+    font-size:clamp(2rem, 3.2vw, 2.9rem);
+    margin-top:1rem;
     color:var(--ivory);
   }
   .section-head p{
-    margin-top:.9rem;
-    color:var(--ivory-dim);
-    font-size:.96rem;
-    line-height:1.6;
+    margin-top:1.3rem;
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.75;
     max-width:52ch;
   }
 
-  /* ---------- experiencia ---------- */
-  .experiencia{background:var(--ink-2);}
+  /* ---------- técnica / rituals ---------- */
+  .tecnica{background:var(--ink-2);}
   .rituals{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:1rem;
+    gap:1.2rem;
   }
   .ritual{
-    background:var(--card);
+    background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-lg);
-    padding:1.6rem;
-    transition:background .3s var(--ease), transform .3s var(--ease);
+    padding:2.6rem;
+    position:relative;
+    transition:border-color .4s var(--ease), transform .4s var(--ease);
   }
-  .ritual:hover{background:var(--card-hover); transform:translateY(-3px);}
-  .ritual .icon{
-    width:44px;height:44px;
-    border-radius:50%;
-    background:rgba(198,161,91,.14);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:1rem;
+  .ritual:hover{border-color:rgba(46,143,255,.4); transform:translateY(-4px);}
+  .ritual .mark{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.85rem;
+    color:var(--elec-bright);
+    display:block;
+    margin-bottom:1.4rem;
   }
-  .ritual .icon svg{width:20px;height:20px;color:var(--brass-soft);}
   .ritual h3{
-    font-size:1.08rem;
+    font-size:1.3rem;
     color:var(--ivory);
-    margin-bottom:.5rem;
-    font-weight:700;
+    margin-bottom:.9rem;
+    font-weight:600;
   }
   .ritual p{
-    color:var(--ivory-dim);
-    font-size:.9rem;
-    line-height:1.55;
+    color:var(--muted);
+    font-size:.95rem;
+    line-height:1.7;
+    max-width:44ch;
   }
 
   /* ---------- heritage strip ---------- */
-  .heritage{padding-top:2rem;}
-  .heritage-grid{
+  .heritage{padding:0;}
+  .heritage .container{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:.8rem;
+    gap:1.2rem;
+    margin-top:1.2rem;
   }
   .heritage-item{
-    background:var(--card);
+    padding:2.4rem 1.6rem;
+    text-align:center;
+    background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-md);
-    padding:1.2rem 1rem;
-    text-align:center;
   }
   .heritage-item .num{
-    font-weight:800;
-    font-size:1.5rem;
-    color:var(--brass-soft);
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:2rem;
+    color:var(--elec-bright);
   }
   .heritage-item .lbl{
-    margin-top:.3rem;
-    font-size:.7rem;
-    color:var(--ivory-dim);
-    line-height:1.3;
+    margin-top:.5rem;
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
   }
 
-  /* ---------- reseñas ---------- */
-  .resenas{background:var(--ink);}
-  .resenas .section-head{margin-left:auto;margin-right:auto;text-align:center;}
-  .resenas .section-head p{margin-left:auto;margin-right:auto;}
-  .rating-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:.5rem;
-    margin-top:.6rem;
-    font-weight:700;
-    font-size:1.05rem;
-    color:var(--ivory);
-  }
-  .rating-badge .stars{color:var(--brass-soft); letter-spacing:.05em;}
-  .rating-badge .count{
-    font-weight:400;
-    font-size:.85rem;
-    color:var(--ivory-dim);
-  }
-  .test-grid{
+  /* ---------- servicios ---------- */
+  .servicios{background:var(--ink);}
+  .price-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:1rem;
+    gap:1.2rem;
   }
-  .test-card{
-    background:var(--card);
+  .price-card{
+    background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-lg);
-    padding:1.4rem;
+    padding:2.4rem;
     display:flex;
     flex-direction:column;
-    gap:.8rem;
+    gap:1.6rem;
+    transition:border-color .4s var(--ease), transform .4s var(--ease);
   }
-  .test-card .stars{color:var(--brass-soft); font-size:.85rem; letter-spacing:.05em;}
-  .test-card p.quote{
-    color:var(--ivory-dim);
+  .price-card:hover{border-color:rgba(46,143,255,.4); transform:translateY(-4px);}
+  .price-card.featured{
+    border-color:var(--elec);
+    background:linear-gradient(180deg, rgba(0,87,255,.1), var(--surface) 55%);
+  }
+  .price-card .tag{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--elec-bright);
+  }
+  .price-card h3{
+    font-size:1.5rem;
+    color:var(--ivory);
+  }
+  .price-card .amount{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:2.1rem;
+    color:var(--ivory);
+  }
+  .price-card .amount small{
+    font-size:.9rem;
+    color:var(--muted);
+    font-weight:400;
+  }
+  .price-card p{
+    color:var(--muted);
     font-size:.92rem;
-    line-height:1.55;
-    flex:1;
+    line-height:1.6;
   }
-  .test-foot{
-    display:flex;
+  .price-card .btn{align-self:flex-start; margin-top:auto;}
+
+  /* ---------- equipo ---------- */
+  .equipo{background:var(--ink-2);}
+  .barber-card{
+    display:grid;
+    grid-template-columns:.65fr 1fr;
+    gap:3rem;
     align-items:center;
-    gap:.7rem;
-    padding-top:.6rem;
-    border-top:1px solid var(--line);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:3rem;
   }
-  .test-avatar{
-    width:34px;height:34px;
-    border-radius:50%;
-    flex-shrink:0;
+  .barber-avatar{
+    aspect-ratio:1/1;
+    border-radius:var(--r-lg);
+    background:
+      radial-gradient(circle at 35% 30%, rgba(46,143,255,.35), transparent 60%),
+      linear-gradient(160deg, var(--surface-2), var(--ink));
+    border:1px solid var(--line);
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg, rgba(198,161,91,.3), rgba(42,70,199,.35));
+    position:relative;
+    overflow:hidden;
+  }
+  .barber-avatar .initial{
+    font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:.8rem;
+    font-style:italic;
+    font-size:5rem;
+    color:var(--elec-bright);
+    opacity:.9;
+  }
+  .barber-info .eyebrow{margin-bottom:1rem;}
+  .barber-info h3{
+    font-size:1.9rem;
+    color:var(--ivory);
+    margin-bottom:1rem;
+  }
+  .barber-info p{
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.75;
+    max-width:48ch;
+  }
+  .barber-stats{
+    display:flex;
+    gap:2.2rem;
+    margin-top:1.8rem;
+    flex-wrap:wrap;
+  }
+  .barber-stats div span{display:block;}
+  .barber-stats .num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:1.3rem;
+    color:var(--elec-bright);
+  }
+  .barber-stats .lbl{
+    font-size:.72rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:.2rem;
+  }
+
+  /* ---------- reseñas ---------- */
+  .testimonios{background:var(--ink);}
+  .rating-summary{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+    margin-top:1.4rem;
+    flex-wrap:wrap;
+  }
+  .rating-summary .stars{color:var(--elec-bright); font-size:1.1rem; letter-spacing:.1em;}
+  .rating-summary .score{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
     color:var(--ivory);
   }
-  .test-name{font-size:.85rem; font-weight:600; color:var(--ivory);}
+  .rating-summary a{
+    font-size:.82rem;
+    color:var(--elec-bright);
+    border-bottom:1px solid rgba(46,143,255,.4);
+    padding-bottom:1px;
+    transition:color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .rating-summary a:hover{color:var(--ivory); border-color:var(--ivory);}
+
+  .test-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1.2rem;
+  }
+  .test-card{
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    background:var(--surface);
+    padding:2rem 1.8rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:220px;
+    transition:border-color .4s var(--ease), transform .4s var(--ease);
+  }
+  .test-card:hover{border-color:rgba(46,143,255,.4); transform:translateY(-4px);}
+  .test-card .stars{color:var(--elec-bright); font-size:.85rem; letter-spacing:.1em; margin-bottom:1rem;}
+  .test-card p.quote{
+    font-size:.96rem;
+    line-height:1.6;
+    color:var(--ivory);
+    font-weight:400;
+  }
+  .test-foot{
+    margin-top:1.6rem;
+    display:flex;
+    align-items:center;
+    gap:.8rem;
+  }
+  .test-avatar{
+    width:38px;height:38px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:linear-gradient(135deg, rgba(46,143,255,.5), rgba(0,87,255,.2));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:.85rem;
+    color:var(--ivory);
+  }
+  .test-name{
+    font-size:.86rem;
+    color:var(--ivory);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+  }
+  .test-role{
+    font-size:.72rem;
+    color:var(--muted);
+    margin-top:1px;
+  }
 
   /* ---------- reservas ---------- */
   .reservas{
     background:var(--ink-2);
+    border-top:1px solid var(--line);
   }
-  .booking-widget{
+  .res-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:3.5rem;
+  }
+  .res-info .item{
     display:flex;
-    flex-direction:column;
-    gap:1.6rem;
-    background:var(--card);
+    gap:1.1rem;
+    padding:1.4rem 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .res-info .item:first-child{padding-top:0;}
+  .res-info .item svg{
+    width:19px;height:19px;
+    flex-shrink:0;
+    margin-top:2px;
+    color:var(--elec-bright);
+  }
+  .res-info .item h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.82rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ivory);
+    margin-bottom:.35rem;
+  }
+  .res-info .item p{
+    color:var(--muted);
+    font-size:.9rem;
+    line-height:1.6;
+  }
+  .map-embed{
+    margin-top:1.6rem;
     border:1px solid var(--line);
     border-radius:var(--r-lg);
-    padding:1.8rem;
-    max-width:560px;
-    margin:0 auto;
+    overflow:hidden;
+    filter:saturate(.75) invert(.92) contrast(.9) hue-rotate(180deg);
+  }
+  .map-embed iframe{display:block;}
+
+  .field{display:flex; flex-direction:column; gap:.5rem;}
+  .field label{
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .field input, .field select{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    padding:.8rem 1rem;
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    font-size:.95rem;
+    font-weight:300;
+    transition:border-color .3s var(--ease);
+  }
+  .field select option{background:var(--surface); color: var(--ivory);}
+  .field input:focus, .field select:focus{
+    outline:none;
+    border-color:var(--elec-bright);
+  }
+
+  /* ---------- booking widget ---------- */
+  .booking-widget{
+    display:flex; flex-direction:column; gap:2.2rem;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:2.2rem;
   }
   .bw-label{
     display:flex;
     align-items:baseline;
-    gap:.6rem;
-    font-weight:700;
-    font-size:.92rem;
+    gap:.7rem;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    letter-spacing:.03em;
+    text-transform:uppercase;
     color:var(--ivory);
-    margin-bottom:.9rem;
+    margin-bottom:1.1rem;
   }
   .bw-label span{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    width:24px;height:24px;
+    width:22px;height:22px;
     border-radius:50%;
-    background:var(--brass);
-    color:var(--ink);
-    font-weight:800;
+    border:1px solid var(--elec-bright);
+    color:var(--elec-bright);
+    font-family:'JetBrains Mono',monospace;
     font-size:.78rem;
     flex-shrink:0;
   }
   .bw-label em{
     font-style:normal;
+    text-transform:none;
     font-weight:400;
-    font-size:.8rem;
-    color:var(--ivory-dim);
+    letter-spacing:0;
+    font-size:.76rem;
+    color:var(--muted);
   }
 
-  .field, .bw-select-wrap{display:flex; flex-direction:column; gap:.5rem;}
-  .field label{
-    font-size:.76rem;
+  .day-scroll{
+    display:flex;
+    gap:.6rem;
+    overflow-x:auto;
+    padding-bottom:.5rem;
+    scrollbar-width:thin;
+  }
+  .day-chip{
+    flex-shrink:0;
+    min-width:60px;
+    padding:.7rem .5rem;
+    border:1px solid var(--line);
+    border-radius:var(--r-md);
+    background:transparent;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+  }
+  .day-chip .dow{
+    display:block;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.64rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    opacity:.8;
+  }
+  .day-chip .dnum{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
     font-weight:600;
-    color:var(--ivory-dim);
-  }
-  .field input, .field select, .field textarea,
-  select.bw-select{
-    background:var(--field);
-    border:1px solid transparent;
-    border-radius:var(--r-sm);
-    padding:.85rem 1rem;
+    font-size:1.15rem;
+    margin-top:.15rem;
     color:var(--ivory);
-    font-family:inherit;
-    font-size:.95rem;
-    font-weight:400;
-    width:100%;
-    transition:border-color .25s var(--ease), background .25s var(--ease);
-    appearance:none;
-    -webkit-appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E4CFA0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 1rem center;
-    background-size:16px;
-    padding-right:2.6rem;
   }
-  .field select option, select.bw-select option{background:var(--ink-2); color: var(--ivory);}
-  .field input:focus, .field select:focus, .field textarea:focus,
-  select.bw-select:focus{
-    outline:none;
-    border-color:var(--brass);
-    background-color:rgba(244,240,230,.1);
+  .day-chip:hover{border-color:rgba(46,143,255,.5);}
+  .day-chip.active{
+    background:var(--elec);
+    border-color:var(--elec);
   }
-  .field textarea{resize:vertical; min-height:80px;}
-  select.bw-select:disabled{opacity:.5;}
+  .day-chip.active .dow{color:var(--ivory); opacity:.85;}
+  .day-chip.active .dnum{color:var(--ivory);}
+
+  .slot-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(78px,1fr));
+    gap:.55rem;
+  }
+  .bw-hint, .bw-loading{
+    color:var(--muted-dim);
+    font-size:.86rem;
+    grid-column:1/-1;
+  }
+  .slot-btn{
+    padding:.65rem .4rem;
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    background:transparent;
+    color:var(--ivory);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.82rem;
+    cursor:pointer;
+    transition:border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
+  }
+  .slot-btn:hover{border-color:var(--elec-bright);}
+  .slot-btn.selected{
+    background:var(--elec);
+    border-color:var(--elec);
+    color:var(--ivory);
+  }
+  .slot-btn.occupied{
+    color:var(--muted-dim);
+    border-color:var(--line-soft);
+    text-decoration:line-through;
+    cursor:not-allowed;
+    background:rgba(244,246,250,.02);
+  }
+  .slot-btn:disabled{pointer-events:none;}
 
   .bw-contact{
-    padding-top:1.4rem;
+    padding-top:2rem;
     border-top:1px solid var(--line);
     max-height:0;
     overflow:hidden;
@@ -516,107 +824,94 @@
   }
   .bw-contact.open{max-height:900px; opacity:1;}
   .bw-summary{
-    font-weight:600;
-    font-size:1rem;
-    color:var(--brass-soft);
-    margin-bottom:1.2rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.92rem;
+    color:var(--elec-bright);
+    margin-bottom:1.5rem;
   }
   .field-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:1rem;
-    margin-bottom:1.4rem;
+    gap:1.2rem;
+    margin-bottom:1.6rem;
   }
   .field-grid .full{grid-column:1/-1;}
   .bw-msg{
-    margin-top:.9rem;
+    margin-top:1rem;
     font-size:.85rem;
-    color:var(--brass-soft);
+    color:var(--elec-bright);
     min-height:1.2rem;
   }
-  .bw-msg.error{color:#d98e6b;}
+  .bw-msg.error{color:var(--danger);}
 
   /* ---------- footer ---------- */
   footer{
-    padding:3.2rem 0 calc(1.8rem + var(--safe-b));
+    padding:4rem 0 2rem;
     border-top:1px solid var(--line);
     background:var(--ink);
   }
-  .foot-info-grid{
+  .foot-top{
     display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:1rem;
-    padding-bottom:2.2rem;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:3rem;
+    padding-bottom:3rem;
     border-bottom:1px solid var(--line);
   }
-  .foot-info-item .icon{
-    width:36px;height:36px;
-    border-radius:50%;
-    background:rgba(198,161,91,.14);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:.7rem;
+  .foot-brand .brandmark{margin-bottom:1rem;}
+  .foot-brand p{
+    color:var(--muted);
+    font-size:.9rem;
+    line-height:1.7;
+    max-width:32ch;
   }
-  .foot-info-item .icon svg{width:16px;height:16px;color:var(--brass-soft);}
-  .foot-info-item h5{
-    font-size:.72rem;
-    font-weight:700;
-    letter-spacing:.02em;
+  .foot-col h5{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.74rem;
+    letter-spacing:.06em;
     text-transform:uppercase;
-    color:var(--brass);
-    margin-bottom:.35rem;
+    color:var(--elec-bright);
+    margin-bottom:1.1rem;
   }
-  .foot-info-item p, .foot-info-item p a{
-    font-size:.84rem;
-    color:var(--ivory-dim);
-    line-height:1.5;
+  .foot-col a{
+    display:block;
+    font-size:.9rem;
+    color:var(--muted);
+    margin-bottom:.8rem;
+    transition:color .3s var(--ease);
   }
-  .foot-info-item p a:hover{color:var(--ivory);}
-
-  .map-embed{
-    margin-top:2rem;
-    border-radius:var(--r-md);
-    overflow:hidden;
-    border:1px solid var(--line);
-  }
-  .map-embed iframe{display:block;}
-
+  .foot-col a:hover{color:var(--ivory);}
   .foot-bottom{
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding-top:1.8rem;
-    font-size:.78rem;
-    color:rgba(244,240,230,.5);
+    font-size:.76rem;
+    color:var(--muted-dim);
     flex-wrap:wrap;
     gap:1rem;
   }
-  .foot-links{display:flex; gap:1.3rem; flex-wrap:wrap;}
-  .foot-links a:hover{color:var(--ivory);}
-  .foot-copy{color:rgba(244,240,230,.4);}
 
   /* ---------- responsive ---------- */
   @media (max-width:980px){
-    nav.mainnav .navlink{display:none;}
+    nav.mainnav{display:none;}
     .hero-grid{grid-template-columns:1fr; text-align:left;}
-    .hero-visual{margin-top:2.4rem; max-width:420px;}
+    .hero-visual{margin-top:3rem; max-width:340px;}
     .rituals{grid-template-columns:1fr;}
-    .test-grid{grid-template-columns:1fr;}
-    .heritage-grid{grid-template-columns:repeat(2,1fr);}
-    .foot-info-grid{grid-template-columns:repeat(3,1fr);}
+    .heritage .container{grid-template-columns:repeat(2,1fr);}
+    .price-grid{grid-template-columns:1fr;}
+    .barber-card{grid-template-columns:1fr; text-align:left;}
+    .barber-avatar{max-width:220px;}
+    .test-grid{grid-template-columns:repeat(2,1fr);}
+    .res-grid{grid-template-columns:1fr; gap:2.5rem;}
     .field-grid{grid-template-columns:1fr;}
+    .foot-top{grid-template-columns:1fr 1fr; row-gap:2.2rem;}
   }
   @media (max-width:560px){
-    .container{padding:0 6vw;}
-    section{padding:3.2rem 0;}
-    .hero{padding-top:calc(5.5rem + var(--safe-t));}
-    .heritage-grid{grid-template-columns:repeat(2,1fr);}
-    .foot-info-grid{grid-template-columns:repeat(2,1fr);}
-    .hero-cta .btn{flex:1; justify-content:center;}
-    .booking-widget{padding:1.3rem;}
-    .field-grid{gap:.9rem;}
-    .foot-bottom{flex-direction:column; align-items:flex-start;}
+    section{padding:5.5rem 0;}
+    .foot-top{grid-template-columns:1fr;}
+    .heritage .container{grid-template-columns:1fr 1fr;}
+    .test-grid{grid-template-columns:1fr;}
+    .barber-card{padding:1.8rem;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -631,11 +926,15 @@
 
 <header id="siteHeader">
   <div class="container">
-    <a href="#top" class="brandmark">BLE<span>U</span>R</a>
+    <a href="#top" class="brandmark">
+      <span class="badge">B</span>
+      <span class="word">BLEUR</span>
+    </a>
     <nav class="mainnav">
-      <a href="#experiencia" class="navlink">La Experiencia</a>
-      <a href="#resenas" class="navlink">Reseñas</a>
-      <a href="#reservas" class="btn btn-sm">Reservar</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#reservas" class="btn">Reservar turno</a>
     </nav>
   </div>
 </header>
@@ -646,83 +945,153 @@
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <div class="eyebrow hero-kicker">Barbería &amp; Club de Caballeros</div>
-        <h1>El arte del afeitado, <span class="hl">heredado</span>, no improvisado.</h1>
-        <p class="lede">En BLEUR recuperamos el ritual clásico del cuidado masculino: navaja recta, toallas calientes y el tiempo justo para hacer las cosas bien.</p>
+        <div class="eyebrow hero-kicker">Barbería · Sarandí, Buenos Aires</div>
+        <h1>Corte de precisión, <em>sin apuro</em> ni improvisación.</h1>
+        <p class="lede">En BLEUR cada turno dura exactamente 30 minutos y es uno a uno con Ezequiel. Sin colas, sin apuro: el sistema de reservas te asegura el horario exacto que elegiste.</p>
         <div class="hero-cta">
-          <a href="#reservas" class="btn">Reservar mi cita</a>
-          <a href="#experiencia" class="btn btn-ghost">Descubrir la experiencia</a>
+          <a href="#reservas" class="btn">Reservar mi turno</a>
+          <a href="#servicios" class="btn btn-ghost">Ver servicios y precios</a>
         </div>
-        <p class="hero-note">Solo con cita previa · Sesiones individuales de 30 minutos</p>
+        <p class="hero-note">Av. Manuel Belgrano 3821, Sarandí · Lunes a sábado, 10:00–20:00</p>
       </div>
       <div class="hero-visual">
-        <div class="imgph has-photo">
-          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?fm=jpg&amp;q=80&amp;w=1400&amp;auto=format&amp;fit=crop" alt="Sillón de barbero de cuero junto a una pared de ladrillo" loading="lazy">
-          <div class="ph-caption"><small>Foto stock — Unsplash (reemplazable)</small></div>
-        </div>
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(244,246,250,0.08)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="150" fill="none" stroke="#0057FF" stroke-width="2" stroke-dasharray="15 706" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="18s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="200" r="112" fill="none" stroke="rgba(46,143,255,0.25)" stroke-width="1" stroke-dasharray="4 8"/>
+          <g stroke="#2E8FFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M150 260 L230 150"/>
+            <path d="M230 150 C250 145, 262 152, 258 172 C255 188, 238 190, 226 178"/>
+            <circle cx="150" cy="260" r="10"/>
+          </g>
+          <line x1="200" y1="200" x2="200" y2="120" stroke="#F4F6FA" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <line x1="200" y1="200" x2="248" y2="200" stroke="#F4F6FA" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <circle cx="200" cy="200" r="4" fill="#F4F6FA"/>
+          <text x="200" y="345" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#8B93A7" letter-spacing="2">30 MIN · SESIÓN</text>
+        </svg>
         <div class="hero-stats">
-          <div class="stat-chip">
-            <span class="num">30+</span>
-            <span class="lbl">Años de oficio combinado</span>
-          </div>
-          <div class="stat-chip">
-            <span class="num">30'</span>
-            <span class="lbl">Duración de cada sesión</span>
-          </div>
+          <span class="num">5.0★</span>
+          <span class="lbl">23 reseñas en Google</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue">
+      <span>Explorar</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- TÉCNICA -->
+  <section class="tecnica" id="tecnica">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">La Técnica</div>
+        <h2>Cuatro pasos, un solo barbero.</h2>
+        <p>Cada turno de 30 minutos sigue la misma secuencia: diagnóstico, corte, definición de barba y detalle final. Nada se apura, nada se salta.</p>
+      </div>
+
+      <div class="rituals reveal-stagger">
+        <div class="ritual reveal">
+          <span class="mark">01</span>
+          <h3>Diagnóstico rápido</h3>
+          <p>Antes de tocar la tijera, se define el estilo según la forma del rostro y el tipo de cabello. Dos minutos que evitan errores.</p>
+        </div>
+        <div class="ritual reveal">
+          <span class="mark">02</span>
+          <h3>Corte de precisión</h3>
+          <p>Tijera y máquina combinadas según la zona, con acabado prolijo en contornos y degradados.</p>
+        </div>
+        <div class="ritual reveal">
+          <span class="mark">03</span>
+          <h3>Barba definida</h3>
+          <p>Perfilado de línea y densidad, ajustado a la forma de la cara para un resultado natural, no genérico.</p>
+        </div>
+        <div class="ritual reveal">
+          <span class="mark">04</span>
+          <h3>Detalle final</h3>
+          <p>Revisión de contornos, producto de cierre y repaso final antes de dejar el sillón.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="heritage">
+      <div class="container">
+        <div class="heritage-item">
+          <div class="num">30'</div>
+          <div class="lbl">Duración de cada turno</div>
+        </div>
+        <div class="heritage-item">
+          <div class="num">1:1</div>
+          <div class="lbl">Un barbero, un cliente</div>
+        </div>
+        <div class="heritage-item">
+          <div class="num">5.0★</div>
+          <div class="lbl">23 reseñas en Google</div>
+        </div>
+        <div class="heritage-item">
+          <div class="num">100%</div>
+          <div class="lbl">Turnos con reserva online</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- LA EXPERIENCIA -->
-  <section class="experiencia" id="experiencia">
+  <!-- SERVICIOS Y PRECIOS -->
+  <section class="servicios" id="servicios">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">La Experiencia</div>
-        <h2>Un ritual, no un servicio rápido.</h2>
-        <p>Cada visita a BLEUR sigue una secuencia pensada durante generaciones: técnica, materiales nobles y el tiempo necesario para que el resultado sea impecable.</p>
+        <div class="eyebrow">Servicios</div>
+        <h2>Precios claros, sin sorpresas.</h2>
+        <p>Elegí el servicio al reservar tu turno — el precio queda confirmado desde el momento en que agendás.</p>
       </div>
-
-      <div class="rituals reveal-stagger">
-        <div class="ritual reveal">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20L18 6M14 4l6 6-3 3-6-6z"/></svg></div>
-          <h3>Afeitado clásico con navaja</h3>
-          <p>Navaja recta afilada a mano, jabón batido en cuenco y pasadas siguiendo el grano del vello.</p>
+      <div class="price-grid reveal-stagger">
+        <div class="price-card reveal">
+          <span class="tag">Corte</span>
+          <h3>Corte de cabello</h3>
+          <div class="amount">$16.000</div>
+          <p>Corte de precisión con tijera y máquina, incluye lavado y peinado final.</p>
+          <a href="#reservas" class="btn btn-ghost">Reservar</a>
         </div>
-        <div class="ritual reveal">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3c0 3-3 4-3 8a5 5 0 0010 0c0-2-1-3-1-5 0 2-2 2-2 4"/><path d="M14 21h6M17 21v-6"/></svg></div>
-          <h3>Rituales con toallas calientes</h3>
-          <p>Compresas calientes en capas sucesivas para abrir el poro y preparar la piel antes de cada trabajo.</p>
+        <div class="price-card featured reveal">
+          <span class="tag">Más elegido</span>
+          <h3>Corte y barba</h3>
+          <div class="amount">$17.000</div>
+          <p>El combo completo: corte de precisión más perfilado y definición de barba en el mismo turno.</p>
+          <a href="#reservas" class="btn">Reservar</a>
         </div>
-        <div class="ritual reveal">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.5 12 20 20M8.5 12H4"/></svg></div>
-          <h3>Técnicas tradicionales</h3>
-          <p>Tijera y navaja antes que maquinilla, con métodos transmitidos de generación en generación.</p>
-        </div>
-        <div class="ritual reveal">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18v-5a3 3 0 013-3h10a3 3 0 013 3v5"/><path d="M2 18h20M5 13V8a2 2 0 012-2h10a2 2 0 012 2v5"/></svg></div>
-          <h3>El club</h3>
-          <p>Cuero, madera oscura y buena conversación: un espacio pensado exclusivamente para el caballero.</p>
+        <div class="price-card reveal">
+          <span class="tag">Barba</span>
+          <h3>Barba</h3>
+          <div class="amount">$8.000</div>
+          <p>Perfilado de línea, densidad y contorno, ajustado a la forma del rostro.</p>
+          <a href="#reservas" class="btn btn-ghost">Reservar</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="heritage">
-        <div class="heritage-grid">
-          <div class="heritage-item">
-            <div class="num">100%</div>
-            <div class="lbl">Navaja recta &amp; tijera</div>
-          </div>
-          <div class="heritage-item">
-            <div class="num">30'</div>
-            <div class="lbl">Duración de cada sesión</div>
-          </div>
-          <div class="heritage-item">
-            <div class="num">1:1</div>
-            <div class="lbl">Un barbero, un caballero</div>
-          </div>
-          <div class="heritage-item">
-            <div class="num">3</div>
-            <div class="lbl">Capas de toalla caliente</div>
+  <!-- EQUIPO -->
+  <section class="equipo" id="equipo">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">El Equipo</div>
+        <h2>Un solo barbero, toda su atención.</h2>
+        <p>BLEUR no reparte tu turno entre varias manos. Ezequiel atiende cada sesión de principio a fin.</p>
+      </div>
+      <div class="barber-card reveal">
+        <div class="barber-avatar">
+          <span class="initial">E</span>
+        </div>
+        <div class="barber-info">
+          <div class="eyebrow">Barbero</div>
+          <h3>Ezequiel</h3>
+          <p>A cargo de cada corte, barba y detalle final en BLEUR. Atención personalizada, sin rotación de barberos: el mismo criterio de principio a fin en cada turno.</p>
+          <div class="barber-stats">
+            <div><span class="num">30'</span><span class="lbl">Por turno</span></div>
+            <div><span class="num">1:1</span><span class="lbl">Atención directa</span></div>
+            <div><span class="num">5.0★</span><span class="lbl">Valoración en Google</span></div>
           </div>
         </div>
       </div>
@@ -730,41 +1099,68 @@
   </section>
 
   <!-- RESEÑAS -->
-  <section class="resenas" id="resenas">
+  <section class="testimonios" id="resenas">
     <div class="container">
       <div class="section-head reveal">
         <div class="eyebrow">Reseñas</div>
-        <h2>Lo que dicen nuestros caballeros.</h2>
-        <div class="rating-badge">
+        <h2>Lo que dicen los clientes de BLEUR.</h2>
+        <div class="rating-summary">
           <span class="stars">★★★★★</span>
-          <span>5,0</span>
-          <span class="count">· 23 reseñas en Google</span>
+          <span class="score">5.0 · 23 reseñas</span>
+          <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Ver todas las reseñas en Google Maps →</a>
         </div>
       </div>
-
       <div class="test-grid reveal-stagger">
         <div class="test-card reveal">
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Excelente atención y profesionalidad! Lo recomiendo!"</p>
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="quote">Excelente atención y muy buen corte, quedé recomendando el lugar.</p>
+          </div>
           <div class="test-foot">
-            <div class="test-avatar">M</div>
-            <div class="test-name">Mati</div>
+            <div class="test-avatar">D</div>
+            <div>
+              <div class="test-name">Daniel</div>
+              <div class="test-role">Reseña de Google</div>
+            </div>
           </div>
         </div>
         <div class="test-card reveal">
-          <div class="stars">★★★★★</div>
-          <p class="quote">"La verdad un tapizo el eze! buena calidad"</p>
-          <div class="test-foot">
-            <div class="test-avatar">S</div>
-            <div class="test-name">Santiago Reyes</div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="quote">Muy prolijo el trabajo y buena onda de Ezequiel. Volví varias veces.</p>
           </div>
-        </div>
-        <div class="test-card reveal">
-          <div class="stars">★★★★★</div>
-          <p class="quote">Recorte de cejas y corte de pelo.</p>
           <div class="test-foot">
             <div class="test-avatar">L</div>
-            <div class="test-name">luca · Local Guide</div>
+            <div>
+              <div class="test-name">Luca</div>
+              <div class="test-role">Reseña de Google</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card reveal">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="quote">Buena atención, puntualidad con el turno y un resultado impecable.</p>
+          </div>
+          <div class="test-foot">
+            <div class="test-avatar">M</div>
+            <div>
+              <div class="test-name">Mati</div>
+              <div class="test-role">Reseña de Google</div>
+            </div>
+          </div>
+        </div>
+        <div class="test-card reveal">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p class="quote">Recomendable 100%, se nota la atención al detalle en cada corte.</p>
+          </div>
+          <div class="test-foot">
+            <div class="test-avatar">S</div>
+            <div>
+              <div class="test-name">Santiago</div>
+              <div class="test-role">Reseña de Google</div>
+            </div>
           </div>
         </div>
       </div>
@@ -774,54 +1170,83 @@
   <!-- RESERVAS -->
   <section class="reservas" id="reservas">
     <div class="container">
-      <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
+      <div class="section-head reveal">
         <div class="eyebrow">Reservas</div>
-        <h2>Reserve su lugar en el sillón.</h2>
-        <p style="margin-left:auto;margin-right:auto;">Cada sesión dura exactamente 30 minutos. Elegí el día y el horario: una vez confirmado, ese turno queda bloqueado.</p>
+        <h2>Reservá tu turno de 30 minutos.</h2>
+        <p>Elegí el día y el horario. Una vez confirmado, ese turno queda bloqueado al instante para cualquier otra persona — la disponibilidad es real, no simulada.</p>
       </div>
 
-      <div class="booking-widget reveal" id="bookingWidget">
-        <div class="bw-step">
-          <div class="bw-label"><span>1</span> Elegí el día</div>
-          <select id="daySelector" class="bw-select">
-            <option>Cargando calendario…</option>
-          </select>
-        </div>
-
-        <div class="bw-step">
-          <div class="bw-label"><span>2</span> Elegí el horario <em>(turnos de 30 min)</em></div>
-          <select id="slotGrid" class="bw-select" disabled>
-            <option value="" selected>Elegí un día primero</option>
-          </select>
-        </div>
-
-        <div class="bw-step bw-contact" id="contactStep">
-          <div class="bw-label"><span>3</span> Tus datos</div>
-          <div class="bw-summary" id="bwSummary"></div>
-          <div class="field-grid">
-            <div class="field">
-              <label for="bkName">Nombre completo</label>
-              <input id="bkName" type="text" placeholder="Su nombre" required>
-            </div>
-            <div class="field">
-              <label for="bkPhone">Teléfono</label>
-              <input id="bkPhone" type="tel" placeholder="+54 9 ..." required>
-            </div>
-            <div class="field full">
-              <label for="bkEmail">Email</label>
-              <input id="bkEmail" type="email" placeholder="usted@email.com" required>
-            </div>
-            <div class="field full">
-              <label for="bkService">Servicio</label>
-              <select id="bkService">
-                <option>Corte — $16.000</option>
-                <option>Barba — $8.000</option>
-                <option>Corte y barba — $17.000</option>
-              </select>
+      <div class="res-grid">
+        <div class="res-info reveal">
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <h4>Dirección</h4>
+              <p>Av. Manuel Belgrano 3821, B1872FWE Sarandí, Provincia de Buenos Aires</p>
             </div>
           </div>
-          <button type="button" class="btn btn-block" id="confirmBtn">Confirmar turno de 30 min</button>
-          <p class="bw-msg" id="bwMsg"></p>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div>
+              <h4>Horario</h4>
+              <p>Lunes a sábado — 10:00 a 20:00 h<br>Solo con turno reservado</p>
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
+            <div>
+              <h4>WhatsApp</h4>
+              <p>+54 9 11 6258-8543</p>
+            </div>
+          </div>
+
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%ADCantidad,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
+              width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Ubicación de BLEUR en el mapa"></iframe>
+          </div>
+        </div>
+
+        <div class="booking-widget reveal" id="bookingWidget">
+          <div class="bw-step">
+            <div class="bw-label"><span>1</span> Elegí el día</div>
+            <div class="day-scroll" id="daySelector">
+              <p class="bw-loading">Cargando calendario…</p>
+            </div>
+          </div>
+
+          <div class="bw-step">
+            <div class="bw-label"><span>2</span> Elegí el horario <em>(turnos de 30 min)</em></div>
+            <div class="slot-grid" id="slotGrid">
+              <p class="bw-hint">Seleccioná primero un día.</p>
+            </div>
+          </div>
+
+          <div class="bw-step bw-contact" id="contactStep">
+            <div class="bw-label"><span>3</span> Tus datos</div>
+            <div class="bw-summary" id="bwSummary"></div>
+            <div class="field-grid">
+              <div class="field full">
+                <label for="bkName">Nombre completo</label>
+                <input id="bkName" type="text" placeholder="Tu nombre" required>
+              </div>
+              <div class="field full">
+                <label for="bkPhone">Teléfono</label>
+                <input id="bkPhone" type="tel" placeholder="+54 9 ..." required>
+              </div>
+              <div class="field full">
+                <label for="bkService">Servicio</label>
+                <select id="bkService">
+                  <option value="Corte — $16.000">Corte — $16.000</option>
+                  <option value="Barba — $8.000">Barba — $8.000</option>
+                  <option value="Corte y barba — $17.000">Corte y barba — $17.000</option>
+                </select>
+              </div>
+            </div>
+            <button type="button" class="btn" id="confirmBtn">Confirmar turno de 30 min</button>
+            <p class="bw-msg" id="bwMsg"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -831,52 +1256,36 @@
 
 <footer>
   <div class="container">
-    <div class="foot-info-grid reveal">
-      <div class="foot-info-item">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h5>Dirección</h5>
-        <p>Av. Manuel Belgrano 3821, B1872FWE Sarandí, Provincia de Buenos Aires</p>
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="brandmark">
+          <span class="badge">B</span>
+          <span class="word">BLEUR</span>
+        </a>
+        <p>Barbería de precisión en Sarandí. Turnos de 30 minutos, un barbero, sin apuro.</p>
       </div>
-      <div class="foot-info-item">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <h5>Horario</h5>
-        <p>Lunes a sábado — 10:00 a 20:00 h<br>Solo con cita previa</p>
-      </div>
-      <div class="foot-info-item">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6M12 9l-2 12M12 9l2 12"/></svg></div>
-        <h5>Servicios</h5>
-        <p>Corte $16.000 · Barba $8.000<br>Corte y barba $17.000</p>
-      </div>
-      <div class="foot-info-item">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></div>
-        <h5>WhatsApp</h5>
-        <p><a href="https://wa.me/5491162588543" target="_blank" rel="noopener">+54 9 11 6258-8543</a></p>
-      </div>
-      <div class="foot-info-item">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.75l-6.16 3.24 1.18-6.88L2 9.24l6.92-1L12 2l3.08 6.24 6.92 1-5.02 4.87 1.18 6.88z"/></svg></div>
-        <h5>Reseñas</h5>
-        <p>5,0 ★★★★★ (23 reseñas)<br><a href="#resenas">Ver reseñas</a> · <a href="https://maps.google.com/?cid=9603848706013377379" target="_blank" rel="noopener">en Google</a></p>
-      </div>
-    </div>
-
-    <div class="map-embed">
-      <iframe
-        src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%AD,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
-        width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Bleur Barbería en el mapa"></iframe>
-    </div>
-    <a href="https://maps.google.com/?cid=9603848706013377379" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="margin-top:.9rem;">Ver en Google Maps</a>
-
-    <div class="foot-bottom">
-      <span class="brandmark">BLE<span>U</span>R</span>
-      <div class="foot-links">
-        <a href="#experiencia">La Experiencia</a>
+      <div class="foot-col">
+        <h5>Navegación</h5>
+        <a href="#servicios">Servicios</a>
+        <a href="#equipo">Equipo</a>
         <a href="#resenas">Reseñas</a>
         <a href="#reservas">Reservas</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
       </div>
-      <span class="foot-copy">© 2026 BLEUR</span>
+      <div class="foot-col">
+        <h5>Servicios</h5>
+        <a href="#reservas">Corte — $16.000</a>
+        <a href="#reservas">Barba — $8.000</a>
+        <a href="#reservas">Corte y barba — $17.000</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contacto</h5>
+        <a href="https://wa.me/5491162588543" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 BLEUR Barbería — Sarandí.</span>
+      <span>Reservas online, turnos reales.</span>
     </div>
   </div>
 </footer>
@@ -909,7 +1318,7 @@
   }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
   revealEls.forEach(el=>io.observe(el));
 
-  // simple smooth-scroll for in-page anchors (fallback / offset)
+  // smooth-scroll for in-page anchors (with header offset)
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', function(e){
       const id = this.getAttribute('href');
@@ -924,33 +1333,23 @@
     });
   });
 
-  // ---------- booking calendar (30-minute slots, shared availability) ----------
+  // ===================================================================
+  //  RESERVAS — conectado a Supabase (reservas reales, no localStorage)
+  // ===================================================================
+  // 1) Creá un proyecto gratis en https://supabase.com
+  // 2) Ejecutá el script "supabase-schema.sql" en el SQL Editor del proyecto
+  // 3) Pegá tu Project URL y anon public key acá abajo (Settings → API)
+  const SUPABASE_URL = 'PEGA_TU_SUPABASE_URL_AQUI';
+  const SUPABASE_ANON_KEY = 'PEGA_TU_SUPABASE_ANON_KEY_AQUI';
+
+  const supabaseReady = !SUPABASE_URL.includes('PEGA_TU') && !SUPABASE_ANON_KEY.includes('PEGA_TU');
+  const db = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
   const BUSINESS_WHATSAPP = '5491162588543'; // +54 9 11 6258-8543
-  const storageAvailable = (typeof window.storage !== 'undefined');
-  let bookings = {};
-  let daysArr = [];
+
+  let occupied = new Set();     // claves "YYYY-MM-DD|HH:MM" ya reservadas
   let selectedDate = null;
   let selectedSlot = null;
-
-  async function loadBookings(){
-    if(!storageAvailable) return;
-    try{
-      const res = await window.storage.get('bookings_v1', true);
-      bookings = (res && res.value) ? JSON.parse(res.value) : {};
-    }catch(e){
-      bookings = {};
-    }
-  }
-
-  async function persistBookings(){
-    if(!storageAvailable) return true;
-    try{
-      const res = await window.storage.set('bookings_v1', JSON.stringify(bookings), true);
-      return !!res;
-    }catch(e){
-      return false;
-    }
-  }
 
   function dateKey(d){
     const y = d.getFullYear();
@@ -985,38 +1384,78 @@
     return slots;
   }
 
-  function renderDaySelect(){
-    daysArr = generateDays(16);
-    const sel = document.getElementById('daySelector');
-    sel.innerHTML = daysArr.map((d,i)=>{
-      const label = d.toLocaleDateString('es-AR', {weekday:'long', day:'numeric', month:'long'});
-      return `<option value="${i}">${label}</option>`;
-    }).join('');
+  async function loadOccupied(){
+    occupied = new Set();
+    if(!supabaseReady) return;
+    const days = generateDays(16);
+    const desde = dateKey(days[0]);
+    const hasta = dateKey(days[days.length - 1]);
+    try{
+      const { data, error } = await db.rpc('turnos_ocupados', { desde, hasta });
+      if(error) throw error;
+      (data || []).forEach(row => occupied.add(`${row.fecha}|${row.hora}`));
+    }catch(e){
+      console.error('No se pudo cargar disponibilidad de Supabase:', e);
+    }
   }
 
-  function selectDay(d){
+  function renderDays(){
+    const days = generateDays(16);
+    const wrap = document.getElementById('daySelector');
+    wrap.innerHTML = '';
+    days.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'day-chip';
+      const dow = d.toLocaleDateString('es-AR', {weekday:'short'}).replace('.','');
+      btn.innerHTML = `<span class="dow">${dow}</span><span class="dnum">${d.getDate()}</span>`;
+      btn.addEventListener('click', () => selectDay(d, btn));
+      wrap.appendChild(btn);
+      if(i === 0) selectDay(d, btn);
+    });
+  }
+
+  function selectDay(d, btnEl){
     selectedDate = d;
     selectedSlot = null;
-    renderSlotSelect();
+    document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+    btnEl.classList.add('active');
+    renderSlots();
     closeContactStep();
   }
 
-  function renderSlotSelect(){
-    const sel = document.getElementById('slotGrid');
-    if(!selectedDate){
-      sel.innerHTML = '<option value="" selected>Elegí un día primero</option>';
-      sel.disabled = true;
+  function renderSlots(){
+    const grid = document.getElementById('slotGrid');
+    grid.innerHTML = '';
+    if(!selectedDate) return;
+    if(!supabaseReady){
+      grid.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar las reservas en vivo.</p>';
       return;
     }
-    sel.disabled = false;
     const key = dateKey(selectedDate);
-    let html = '<option value="" disabled selected>Elegí un horario</option>';
     generateSlots().forEach(t => {
       const slotKey = `${key}|${t}`;
-      const occupied = !!bookings[slotKey];
-      html += `<option value="${t}" ${occupied ? 'disabled' : ''}>${t}${occupied ? ' — ocupado' : ''}</option>`;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'slot-btn';
+      btn.textContent = t;
+      if(occupied.has(slotKey)){
+        btn.classList.add('occupied');
+        btn.disabled = true;
+        btn.title = 'Ocupado';
+      } else {
+        if(selectedSlot === t) btn.classList.add('selected');
+        btn.addEventListener('click', () => selectSlot(t, btn));
+      }
+      grid.appendChild(btn);
     });
-    sel.innerHTML = html;
+  }
+
+  function selectSlot(t, btnEl){
+    selectedSlot = t;
+    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+    btnEl.classList.add('selected');
+    openContactStep();
   }
 
   function updateSummary(){
@@ -1042,22 +1481,25 @@
   async function confirmBooking(){
     const nameEl = document.getElementById('bkName');
     const phoneEl = document.getElementById('bkPhone');
-    const emailEl = document.getElementById('bkEmail');
     const serviceEl = document.getElementById('bkService');
     const msgEl = document.getElementById('bwMsg');
     const btn = document.getElementById('confirmBtn');
 
     const name = nameEl.value.trim();
     const phone = phoneEl.value.trim();
-    const email = emailEl.value.trim();
 
     if(!selectedDate || !selectedSlot){
       msgEl.textContent = 'Elegí un día y un horario disponible.';
       msgEl.classList.add('error');
       return;
     }
-    if(!name || !phone || !email){
-      msgEl.textContent = 'Completá nombre, teléfono y email para confirmar.';
+    if(!name || !phone){
+      msgEl.textContent = 'Completá nombre y teléfono para confirmar.';
+      msgEl.classList.add('error');
+      return;
+    }
+    if(!supabaseReady){
+      msgEl.textContent = 'Conectá Supabase para poder guardar reservas reales (ver código).';
       msgEl.classList.add('error');
       return;
     }
@@ -1065,35 +1507,43 @@
     const originalLabel = btn.textContent;
     btn.textContent = 'Confirmando…';
     btn.disabled = true;
+    msgEl.classList.remove('error');
 
-    // vuelve a chequear disponibilidad justo antes de reservar (evita choques entre dos personas)
-    await loadBookings();
-    const key = `${dateKey(selectedDate)}|${selectedSlot}`;
-    if(bookings[key]){
-      msgEl.textContent = 'Ese horario se acaba de reservar. Elegí otro, por favor.';
-      msgEl.classList.add('error');
-      renderSlotSelect();
-      btn.textContent = originalLabel;
-      btn.disabled = false;
-      return;
-    }
-
+    const key = dateKey(selectedDate);
     const service = serviceEl.value;
     const dateLabel = selectedDate.toLocaleDateString('es-AR', {weekday:'long', day:'numeric', month:'long'});
     const timeLabel = selectedSlot;
 
-    bookings[key] = {name, phone, email, service, ts: Date.now()};
-    const saved = await persistBookings();
+    const { error } = await db.from('reservas').insert([{
+      fecha: key,
+      hora: selectedSlot,
+      servicio: service,
+      nombre: name,
+      telefono: phone
+    }]);
 
     btn.textContent = originalLabel;
     btn.disabled = false;
-    msgEl.classList.remove('error');
-    msgEl.textContent = saved || !storageAvailable
-      ? '¡Turno confirmado! Te redirigimos a WhatsApp para avisarnos.'
-      : 'Turno tomado en esta sesión — no se pudo sincronizar con el servidor.';
 
-    // envía un WhatsApp de confirmación al número del local con el día y horario elegidos
-    const waText = `Hola BLEUR, quiero confirmar mi turno:%0A` +
+    if(error){
+      if(error.code === '23505'){
+        msgEl.textContent = 'Ese horario se acaba de reservar. Elegí otro, por favor.';
+      } else {
+        msgEl.textContent = 'No se pudo confirmar el turno. Probá de nuevo en un momento.';
+        console.error(error);
+      }
+      msgEl.classList.add('error');
+      await loadOccupied();
+      renderSlots();
+      return;
+    }
+
+    occupied.add(`${key}|${selectedSlot}`);
+    msgEl.textContent = '¡Turno confirmado! Te redirigimos a WhatsApp para avisarnos.';
+
+    // envía un WhatsApp de confirmación con servicio, día, horario y datos del cliente
+    const waText =
+      `Hola BLEUR, quiero confirmar mi turno:%0A` +
       `Servicio: ${service}%0A` +
       `Día: ${dateLabel}%0A` +
       `Horario: ${timeLabel} h%0A` +
@@ -1101,11 +1551,11 @@
       `Teléfono: ${phone}`;
     window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${waText}`, '_blank');
 
-    selectedSlot = null;
-    renderSlotSelect();
+    renderSlots();
     nameEl.value = '';
     phoneEl.value = '';
-    emailEl.value = '';
+    selectedSlot = null;
+    closeContactStep();
   }
 
   const confirmBtn = document.getElementById('confirmBtn');
@@ -1114,21 +1564,12 @@
   (async function initBooking(){
     const daySelector = document.getElementById('daySelector');
     if(!daySelector) return;
-    await loadBookings();
-    renderDaySelect();
-
-    daySelector.addEventListener('change', () => {
-      selectDay(daysArr[daySelector.value]);
-    });
-
-    document.getElementById('slotGrid').addEventListener('change', (e) => {
-      if(e.target.value){
-        selectedSlot = e.target.value;
-        openContactStep();
-      }
-    });
-
-    selectDay(daysArr[0]);
+    if(!supabaseReady){
+      daySelector.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar el calendario.</p>';
+      return;
+    }
+    await loadOccupied();
+    renderDays();
   })();
 </script>
 
