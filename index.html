@@ -1339,8 +1339,8 @@
   // 1) Creá un proyecto gratis en https://supabase.com
   // 2) Ejecutá el script "supabase-schema.sql" en el SQL Editor del proyecto
   // 3) Pegá tu Project URL y anon public key acá abajo (Settings → API)
-  const SUPABASE_URL = 'PEGA_TU_SUPABASE_URL_AQUI';
-  const SUPABASE_ANON_KEY = 'PEGA_TU_SUPABASE_ANON_KEY_AQUI';
+  const SUPABASE_URL = 'https://shlofngnentqxvimdppg.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_So5QVZXq8LZCPDkHftHSlA_UMDN730e';
 
   const supabaseReady = !SUPABASE_URL.includes('PEGA_TU') && !SUPABASE_ANON_KEY.includes('PEGA_TU');
   const db = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
