@@ -630,35 +630,8 @@
     border-top:1px solid var(--line);
   }
   .res-grid{
-    display:grid;
-    grid-template-columns:.85fr 1.15fr;
-    gap:3.5rem;
-  }
-  .res-info .item{
     display:flex;
-    gap:1.1rem;
-    padding:1.4rem 0;
-    border-bottom:1px solid var(--line-soft);
-  }
-  .res-info .item:first-child{padding-top:0;}
-  .res-info .item svg{
-    width:19px;height:19px;
-    flex-shrink:0;
-    margin-top:2px;
-    color:var(--elec-bright);
-  }
-  .res-info .item h4{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:.82rem;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    color:var(--ivory);
-    margin-bottom:.35rem;
-  }
-  .res-info .item p{
-    color:var(--muted);
-    font-size:.9rem;
-    line-height:1.6;
+    justify-content:center;
   }
   .map-embed{
     margin-top:1.6rem;
@@ -695,34 +668,36 @@
 
   /* ---------- booking widget ---------- */
   .booking-widget{
-    display:flex; flex-direction:column; gap:2.2rem;
+    display:flex; flex-direction:column; gap:1.5rem;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-lg);
-    padding:2.2rem;
+    padding:1.6rem;
+    width:100%;
+    max-width:480px;
   }
   .bw-label{
     display:flex;
     align-items:baseline;
-    gap:.7rem;
+    gap:.6rem;
     font-family:'Space Grotesk',sans-serif;
     font-weight:600;
-    font-size:.82rem;
+    font-size:.76rem;
     letter-spacing:.03em;
     text-transform:uppercase;
     color:var(--ivory);
-    margin-bottom:1.1rem;
+    margin-bottom:.8rem;
   }
   .bw-label span{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    width:22px;height:22px;
+    width:19px;height:19px;
     border-radius:50%;
     border:1px solid var(--elec-bright);
     color:var(--elec-bright);
     font-family:'JetBrains Mono',monospace;
-    font-size:.78rem;
+    font-size:.72rem;
     flex-shrink:0;
   }
   .bw-label em{
@@ -730,23 +705,23 @@
     text-transform:none;
     font-weight:400;
     letter-spacing:0;
-    font-size:.76rem;
+    font-size:.72rem;
     color:var(--muted);
   }
 
   .day-scroll{
     display:flex;
-    gap:.6rem;
+    gap:.45rem;
     overflow-x:auto;
     padding-bottom:.5rem;
     scrollbar-width:thin;
   }
   .day-chip{
     flex-shrink:0;
-    min-width:60px;
-    padding:.7rem .5rem;
+    min-width:46px;
+    padding:.5rem .35rem;
     border:1px solid var(--line);
-    border-radius:var(--r-md);
+    border-radius:var(--r-sm);
     background:transparent;
     color:var(--muted);
     font-family:'Inter',sans-serif;
@@ -757,7 +732,7 @@
   .day-chip .dow{
     display:block;
     font-family:'Space Grotesk',sans-serif;
-    font-size:.64rem;
+    font-size:.58rem;
     letter-spacing:.06em;
     text-transform:uppercase;
     opacity:.8;
@@ -766,8 +741,8 @@
     display:block;
     font-family:'JetBrains Mono',monospace;
     font-weight:600;
-    font-size:1.15rem;
-    margin-top:.15rem;
+    font-size:.95rem;
+    margin-top:.1rem;
     color:var(--ivory);
   }
   .day-chip:hover{border-color:rgba(46,143,255,.5);}
@@ -780,22 +755,22 @@
 
   .slot-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(78px,1fr));
-    gap:.55rem;
+    grid-template-columns:repeat(auto-fill, minmax(62px,1fr));
+    gap:.4rem;
   }
   .bw-hint, .bw-loading{
     color:var(--muted-dim);
-    font-size:.86rem;
+    font-size:.82rem;
     grid-column:1/-1;
   }
   .slot-btn{
-    padding:.65rem .4rem;
+    padding:.5rem .3rem;
     border:1px solid var(--line);
     border-radius:var(--r-sm);
     background:transparent;
     color:var(--ivory);
     font-family:'JetBrains Mono',monospace;
-    font-size:.82rem;
+    font-size:.76rem;
     cursor:pointer;
     transition:border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
   }
@@ -902,7 +877,6 @@
     .barber-card{grid-template-columns:1fr; text-align:left;}
     .barber-avatar{max-width:220px;}
     .test-grid{grid-template-columns:repeat(2,1fr);}
-    .res-grid{grid-template-columns:1fr; gap:2.5rem;}
     .field-grid{grid-template-columns:1fr;}
     .foot-top{grid-template-columns:1fr 1fr; row-gap:2.2rem;}
   }
@@ -1177,37 +1151,6 @@
       </div>
 
       <div class="res-grid">
-        <div class="res-info reveal">
-          <div class="item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <div>
-              <h4>Dirección</h4>
-              <p>Av. Manuel Belgrano 3821, B1872FWE Sarandí, Provincia de Buenos Aires</p>
-            </div>
-          </div>
-          <div class="item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            <div>
-              <h4>Horario</h4>
-              <p>Lunes a sábado — 10:00 a 19:00 h<br>Solo con turno reservado</p>
-            </div>
-          </div>
-          <div class="item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
-            <div>
-              <h4>WhatsApp</h4>
-              <p>+54 9 11 6258-8543</p>
-            </div>
-          </div>
-
-          <div class="map-embed">
-            <iframe
-              src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%ADCantidad,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
-              width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade" title="Ubicación de BLEUR en el mapa"></iframe>
-          </div>
-        </div>
-
         <div class="booking-widget reveal" id="bookingWidget">
           <div class="bw-step">
             <div class="bw-label"><span>1</span> Elegí el día</div>
@@ -1277,12 +1220,22 @@
         <a href="#reservas">Barba — $8.000</a>
         <a href="#reservas">Corte y barba — $17.000</a>
       </div>
-      <div class="foot-col">
+      <div class="foot-col foot-info">
         <h5>Contacto</h5>
-        <a href="https://wa.me/5491162588543" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Google Maps</a>
+        <p>Av. Manuel Belgrano 3821<br>Sarandí, Buenos Aires</p>
+        <p>Lunes a sábado<br>10:00 a 19:00 h</p>
+        <a href="https://wa.me/5491162588543" target="_blank" rel="noopener">+54 9 11 6258-8543</a>
+        <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Ver en Google Maps →</a>
       </div>
     </div>
+
+    <div class="map-embed foot-map">
+      <iframe
+        src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%ADCantidad,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
+        width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Ubicación de BLEUR en el mapa"></iframe>
+    </div>
+
     <div class="foot-bottom">
       <span>© 2026 BLEUR Barbería — Sarandí.</span>
       <span>Reservas online, turnos reales.</span>
