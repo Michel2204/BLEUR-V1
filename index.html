@@ -213,13 +213,9 @@
   .hero{
     min-height:100svh;
     display:flex;
-    flex-direction:column;
     align-items:center;
-    justify-content:center;
-    gap:3rem;
     position:relative;
     padding-top:6rem;
-    padding-bottom:3rem;
     background:
       radial-gradient(ellipse 70% 55% at 55% -8%, rgba(0,87,255,.28), transparent 62%),
       linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
@@ -281,13 +277,15 @@
   }
   .hero-visual svg{width:100%;height:100%;display:block;}
   .hero-stats{
-    width:fit-content;
-    margin:1.4rem auto 0;
+    position:absolute;
+    left:-1.2rem;
+    bottom:-1.4rem;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-md);
-    padding:1rem 1.5rem;
-    text-align:center;
+    padding:1.3rem 1.6rem;
+    z-index:3;
+    min-width:180px;
     backdrop-filter:blur(8px);
   }
   .hero-stats .num{
@@ -306,11 +304,14 @@
   }
 
   .scroll-cue{
+    position:absolute;
+    bottom:2.4rem;
+    left:50%;
+    transform:translateX(-50%);
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:.6rem;
-    position:relative;
     z-index:2;
   }
   .scroll-cue .line{
@@ -701,63 +702,85 @@
     color:var(--muted);
   }
 
-  .day-slider-box, .time-slider-box{
-    padding:.2rem 0 0;
-  }
-  .slider-value{
-    font-family:'JetBrains Mono',monospace;
-    font-size:1rem;
-    color:var(--ivory);
-    text-transform:capitalize;
-    margin-bottom:.9rem;
-  }
-  .bw-slider{
-    -webkit-appearance:none;
-    appearance:none;
-    width:100%;
-    height:4px;
-    border-radius:999px;
-    background:var(--line);
-    outline:none;
-    cursor:pointer;
-    margin:.2rem 0;
-  }
-  .bw-slider::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    appearance:none;
-    width:20px;height:20px;
-    border-radius:50%;
-    background:var(--elec-bright);
-    border:3px solid var(--ink);
-    box-shadow:0 0 0 1px var(--elec-bright);
-    cursor:pointer;
-  }
-  .bw-slider::-moz-range-track{
-    height:4px;
-    border-radius:999px;
-    background:var(--line);
-  }
-  .bw-slider::-moz-range-thumb{
-    width:20px;height:20px;
-    border-radius:50%;
-    background:var(--elec-bright);
-    border:3px solid var(--ink);
-    box-shadow:0 0 0 1px var(--elec-bright);
-    cursor:pointer;
-  }
-  .slider-ends{
+  .day-scroll{
     display:flex;
-    justify-content:space-between;
-    font-size:.68rem;
+    gap:.6rem;
+    overflow-x:auto;
+    padding-bottom:.5rem;
+    scrollbar-width:thin;
+  }
+  .day-chip{
+    flex-shrink:0;
+    min-width:34px;
+    padding:.3rem .18rem;
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    background:transparent;
+    color:var(--muted);
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+  }
+  .day-chip .dow{
+    display:block;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.5rem;
     letter-spacing:.04em;
     text-transform:uppercase;
-    color:var(--muted-dim);
-    margin-top:.6rem;
+    opacity:.8;
+  }
+  .day-chip .dnum{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:.78rem;
+    margin-top:.1rem;
+    color:var(--ivory);
+  }
+  .day-chip:hover{border-color:rgba(46,143,255,.5);}
+  .day-chip.active{
+    background:var(--elec);
+    border-color:var(--elec);
+  }
+  .day-chip.active .dow{color:var(--ivory); opacity:.85;}
+  .day-chip.active .dnum{color:var(--ivory);}
+
+  .slot-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(48px,1fr));
+    gap:.3rem;
   }
   .bw-hint, .bw-loading{
     color:var(--muted-dim);
     font-size:.86rem;
+    grid-column:1/-1;
   }
+  .slot-btn{
+    padding:.32rem .2rem;
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    background:transparent;
+    color:var(--ivory);
+    font-family:'JetBrains Mono',monospace;
+    font-size:.66rem;
+    cursor:pointer;
+    transition:border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
+  }
+  .slot-btn:hover{border-color:var(--elec-bright);}
+  .slot-btn.selected{
+    background:var(--elec);
+    border-color:var(--elec);
+    color:var(--ivory);
+  }
+  .slot-btn.occupied{
+    color:var(--muted-dim);
+    border-color:var(--line-soft);
+    text-decoration:line-through;
+    cursor:not-allowed;
+    background:rgba(244,246,250,.02);
+  }
+  .slot-btn:disabled{pointer-events:none;}
 
   .bw-contact{
     padding-top:2rem;
@@ -889,10 +912,19 @@
     .foot-info{grid-template-columns:1fr; gap:1.4rem;}
   }
   @media (max-width:760px){
-    .hero{min-height:auto; padding-bottom:3rem; gap:2rem;}
-    .hero-visual{max-width:210px; margin:1rem auto 0;}
-    .hero-stats{padding:.8rem 1.2rem;}
+    /* hero: círculo más chico y la placa de reseñas ya no flota superpuesta ni pisa el "Explorar" */
+    .hero{min-height:auto; padding-bottom:5rem;}
+    .hero-visual{max-width:210px; margin:2rem auto 0;}
+    .hero-stats{
+      position:static;
+      margin:1.2rem auto 0;
+      width:fit-content;
+      min-width:0;
+      padding:.8rem 1.2rem;
+      text-align:center;
+    }
     .hero-stats .num{font-size:1.3rem;}
+    .scroll-cue{display:none;}
   }
   @media (max-width:560px){
     section{padding:5.5rem 0;}
@@ -1346,14 +1378,14 @@
         <div class="booking-widget reveal" id="bookingWidget">
           <div class="bw-step">
             <div class="bw-label"><span>1</span> Elegí el día</div>
-            <div class="day-slider-box" id="daySelector">
+            <div class="day-scroll" id="daySelector">
               <p class="bw-loading">Cargando calendario…</p>
             </div>
           </div>
 
           <div class="bw-step">
             <div class="bw-label"><span>2</span> Elegí el horario <em>(turnos de 30 min)</em></div>
-            <div class="time-slider-box" id="slotGrid">
+            <div class="slot-grid" id="slotGrid">
               <p class="bw-hint">Seleccioná primero un día.</p>
             </div>
           </div>
@@ -1769,63 +1801,62 @@
     }
   }
 
-  let daysCache = [];
-
   function renderDays(){
     const days = generateDays(16);
-    daysCache = days;
     const wrap = document.getElementById('daySelector');
-    const fmtShort = d => d.toLocaleDateString('es-AR', {weekday:'short', day:'numeric', month:'short'}).replace('.','');
-    wrap.innerHTML = `
-      <div class="slider-value" id="daySliderValue"></div>
-      <input type="range" class="bw-slider" id="daySlider" min="0" max="${days.length - 1}" step="1" value="0">
-      <div class="slider-ends"><span>${fmtShort(days[0])}</span><span>${fmtShort(days[days.length - 1])}</span></div>
-    `;
-    document.getElementById('daySlider').addEventListener('input', (e) => {
-      selectDay(daysCache[Number(e.target.value)]);
+    wrap.innerHTML = '';
+    days.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'day-chip';
+      const dow = d.toLocaleDateString('es-AR', {weekday:'short'}).replace('.','');
+      btn.innerHTML = `<span class="dow">${dow}</span><span class="dnum">${d.getDate()}</span>`;
+      btn.addEventListener('click', () => selectDay(d, btn));
+      wrap.appendChild(btn);
+      if(i === 0) selectDay(d, btn);
     });
-    selectDay(days[0]);
   }
 
-  function selectDay(d){
+  function selectDay(d, btnEl){
     selectedDate = d;
     selectedSlot = null;
-    const label = document.getElementById('daySliderValue');
-    if(label) label.textContent = d.toLocaleDateString('es-AR', {weekday:'long', day:'numeric', month:'long'});
+    document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+    btnEl.classList.add('active');
     renderSlots();
+    closeContactStep();
   }
 
   function renderSlots(){
-    const wrap = document.getElementById('slotGrid');
+    const grid = document.getElementById('slotGrid');
+    grid.innerHTML = '';
     if(!selectedDate) return;
     if(!supabaseReady){
-      wrap.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar las reservas en vivo.</p>';
+      grid.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar las reservas en vivo.</p>';
       return;
     }
     const key = dateKey(selectedDate);
-    const disponibles = generateSlots().filter(t => !occupied.has(`${key}|${t}`));
-
-    if(!disponibles.length){
-      wrap.innerHTML = '<p class="bw-hint">No quedan horarios libres este día. Probá con otro día.</p>';
-      closeContactStep();
-      return;
-    }
-
-    wrap.innerHTML = `
-      <div class="slider-value" id="timeSliderValue"></div>
-      <input type="range" class="bw-slider" id="timeSlider" min="0" max="${disponibles.length - 1}" step="1" value="0">
-      <div class="slider-ends"><span>${disponibles[0]} h</span><span>${disponibles[disponibles.length - 1]} h</span></div>
-    `;
-    document.getElementById('timeSlider').addEventListener('input', (e) => {
-      selectSlot(disponibles[Number(e.target.value)]);
+    generateSlots().forEach(t => {
+      const slotKey = `${key}|${t}`;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'slot-btn';
+      btn.textContent = t;
+      if(occupied.has(slotKey)){
+        btn.classList.add('occupied');
+        btn.disabled = true;
+        btn.title = 'Ocupado';
+      } else {
+        if(selectedSlot === t) btn.classList.add('selected');
+        btn.addEventListener('click', () => selectSlot(t, btn));
+      }
+      grid.appendChild(btn);
     });
-    selectSlot(disponibles[0]);
   }
 
-  function selectSlot(t){
+  function selectSlot(t, btnEl){
     selectedSlot = t;
-    const label = document.getElementById('timeSliderValue');
-    if(label) label.textContent = `${t} h`;
+    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+    btnEl.classList.add('selected');
     openContactStep();
   }
 
@@ -2163,6 +2194,68 @@
     }));
   }
 
+  // Comprime en el navegador cualquier foto de producto antes de subirla, como resguardo
+  // contra el límite de 50 MB por archivo de Supabase Storage: si la foto original ya
+  // pesa menos que maxSizeKB, no la toca (mantiene la calidad original); si la supera,
+  // la reescala y baja la calidad JPEG en pasos hasta quedar por debajo del límite.
+  function compressImage(file, { maxDim = 1600, maxSizeKB = 500, mimeType = 'image/jpeg' } = {}){
+    return new Promise((resolve, reject) => {
+      if(!file.type.startsWith('image/')){ resolve(file); return; }
+
+      function runCompression(){
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('No se pudo leer la imagen'));
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onerror = () => reject(new Error('No se pudo procesar la imagen'));
+          img.onload = () => {
+            let { width, height } = img;
+            if(width > maxDim || height > maxDim){
+              if(width > height){ height = Math.round(height * maxDim / width); width = maxDim; }
+              else { width = Math.round(width * maxDim / height); height = maxDim; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+
+            let quality = 0.85;
+            const attempt = () => {
+              canvas.toBlob((blob) => {
+                if(!blob){ reject(new Error('No se pudo comprimir la imagen')); return; }
+                if(blob.size / 1024 <= maxSizeKB || quality <= 0.35){
+                  const newName = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+                  resolve(new File([blob], newName, { type: mimeType }));
+                } else {
+                  quality -= 0.12;
+                  attempt();
+                }
+              }, mimeType, quality);
+            };
+            attempt();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      if(file.size / 1024 <= maxSizeKB){
+        // Ya está por debajo del límite: si además las dimensiones son razonables,
+        // se sube tal cual, sin recomprimir ni perder calidad.
+        const img = new Image();
+        img.onload = () => {
+          URL.revokeObjectURL(img.src);
+          if(img.width <= maxDim && img.height <= maxDim){ resolve(file); }
+          else { runCompression(); }
+        };
+        img.onerror = () => resolve(file);
+        img.src = URL.createObjectURL(file);
+        return;
+      }
+
+      runCompression();
+    });
+  }
+
   document.getElementById('prodSaveBtn').addEventListener('click', async () => {
     const nombre = document.getElementById('prodNombre').value.trim();
     const descripcion = document.getElementById('prodDescripcion').value.trim();
@@ -2182,7 +2275,12 @@
     let foto_url = null;
 
     if(fotoInput.files && fotoInput.files[0]){
-      const file = fotoInput.files[0];
+      let file = fotoInput.files[0];
+      try{
+        file = await compressImage(file, { maxDim: 2400, maxSizeKB: 50 * 1024 });
+      }catch(e){
+        console.error('No se pudo comprimir la imagen, se sube el original:', e);
+      }
       const path = `${Date.now()}_${file.name}`;
       const { error: upErr } = await db.storage.from('productos').upload(path, file);
       if(upErr){
@@ -2278,13 +2376,6 @@
       </div>
     `).join('');
 
-    function soloDigitos(s){ return (s || '').replace(/\D/g, ''); }
-
-    function fechaLegible(fechaStr){
-      const [y, m, d] = fechaStr.split('-').map(Number);
-      return new Date(y, m - 1, d).toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long' });
-    }
-
     // ---- reprogramar: helpers para poblar los selects ----
     function poblarFechas(selectEl, fechaActual){
       const days = generateDays(16);
@@ -2312,7 +2403,6 @@
 
     list.querySelectorAll('.turno-item').forEach(item => {
       const id = item.dataset.id;
-      const registro = data.find(x => String(x.id) === String(id));
       const panel = item.querySelector('.ar-resched');
       const fechaOriginal = panel.dataset.fecha;
       const horaOriginal = panel.dataset.hora;
@@ -2363,17 +2453,6 @@
           poblarHorarios(timeSel, dateSel.value, nuevaHora, fechaOriginal, horaOriginal);
           return;
         }
-        msgResched.textContent = 'Turno reprogramado. Abriendo WhatsApp para avisarle al cliente…';
-        msgResched.className = 'admin-msg ok';
-
-        if(registro && registro.telefono){
-          const tel = soloDigitos(registro.telefono);
-          const texto = encodeURIComponent(
-            `Hola ${registro.nombre}! Te escribimos de BLEUR: tu turno se reprogramó para el ${fechaLegible(nuevaFecha)} a las ${nuevaHora} h. Cualquier cosa, avisanos por acá. ¡Gracias!`
-          );
-          window.open(`https://wa.me/${tel}?text=${texto}`, '_blank');
-        }
-
         await renderAdminTurnos();
         await loadOccupied();
         renderSlots();
