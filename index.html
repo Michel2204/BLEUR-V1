@@ -630,8 +630,35 @@
     border-top:1px solid var(--line);
   }
   .res-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:3.5rem;
+  }
+  .res-info .item{
     display:flex;
-    justify-content:center;
+    gap:1.1rem;
+    padding:1.4rem 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .res-info .item:first-child{padding-top:0;}
+  .res-info .item svg{
+    width:19px;height:19px;
+    flex-shrink:0;
+    margin-top:2px;
+    color:var(--elec-bright);
+  }
+  .res-info .item h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.82rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ivory);
+    margin-bottom:.35rem;
+  }
+  .res-info .item p{
+    color:var(--muted);
+    font-size:.9rem;
+    line-height:1.6;
   }
   .map-embed{
     margin-top:1.6rem;
@@ -668,36 +695,34 @@
 
   /* ---------- booking widget ---------- */
   .booking-widget{
-    display:flex; flex-direction:column; gap:1.5rem;
+    display:flex; flex-direction:column; gap:2.2rem;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:var(--r-lg);
-    padding:1.6rem;
-    width:100%;
-    max-width:480px;
+    padding:2.2rem;
   }
   .bw-label{
     display:flex;
     align-items:baseline;
-    gap:.6rem;
+    gap:.7rem;
     font-family:'Space Grotesk',sans-serif;
     font-weight:600;
-    font-size:.76rem;
+    font-size:.82rem;
     letter-spacing:.03em;
     text-transform:uppercase;
     color:var(--ivory);
-    margin-bottom:.8rem;
+    margin-bottom:1.1rem;
   }
   .bw-label span{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    width:19px;height:19px;
+    width:22px;height:22px;
     border-radius:50%;
     border:1px solid var(--elec-bright);
     color:var(--elec-bright);
     font-family:'JetBrains Mono',monospace;
-    font-size:.72rem;
+    font-size:.78rem;
     flex-shrink:0;
   }
   .bw-label em{
@@ -705,23 +730,23 @@
     text-transform:none;
     font-weight:400;
     letter-spacing:0;
-    font-size:.72rem;
+    font-size:.76rem;
     color:var(--muted);
   }
 
   .day-scroll{
     display:flex;
-    gap:.45rem;
+    gap:.6rem;
     overflow-x:auto;
     padding-bottom:.5rem;
     scrollbar-width:thin;
   }
   .day-chip{
     flex-shrink:0;
-    min-width:46px;
-    padding:.5rem .35rem;
+    min-width:60px;
+    padding:.7rem .5rem;
     border:1px solid var(--line);
-    border-radius:var(--r-sm);
+    border-radius:var(--r-md);
     background:transparent;
     color:var(--muted);
     font-family:'Inter',sans-serif;
@@ -732,7 +757,7 @@
   .day-chip .dow{
     display:block;
     font-family:'Space Grotesk',sans-serif;
-    font-size:.58rem;
+    font-size:.64rem;
     letter-spacing:.06em;
     text-transform:uppercase;
     opacity:.8;
@@ -741,8 +766,8 @@
     display:block;
     font-family:'JetBrains Mono',monospace;
     font-weight:600;
-    font-size:.95rem;
-    margin-top:.1rem;
+    font-size:1.15rem;
+    margin-top:.15rem;
     color:var(--ivory);
   }
   .day-chip:hover{border-color:rgba(46,143,255,.5);}
@@ -755,22 +780,22 @@
 
   .slot-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(62px,1fr));
-    gap:.4rem;
+    grid-template-columns:repeat(auto-fill, minmax(78px,1fr));
+    gap:.55rem;
   }
   .bw-hint, .bw-loading{
     color:var(--muted-dim);
-    font-size:.82rem;
+    font-size:.86rem;
     grid-column:1/-1;
   }
   .slot-btn{
-    padding:.5rem .3rem;
+    padding:.65rem .4rem;
     border:1px solid var(--line);
     border-radius:var(--r-sm);
     background:transparent;
     color:var(--ivory);
     font-family:'JetBrains Mono',monospace;
-    font-size:.76rem;
+    font-size:.82rem;
     cursor:pointer;
     transition:border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
   }
@@ -877,6 +902,7 @@
     .barber-card{grid-template-columns:1fr; text-align:left;}
     .barber-avatar{max-width:220px;}
     .test-grid{grid-template-columns:repeat(2,1fr);}
+    .res-grid{grid-template-columns:1fr; gap:2.5rem;}
     .field-grid{grid-template-columns:1fr;}
     .foot-top{grid-template-columns:1fr 1fr; row-gap:2.2rem;}
   }
@@ -892,6 +918,161 @@
     *{animation:none !important; transition:none !important;}
     .reveal{opacity:1; transform:none;}
   }
+
+  /* ---------- PRODUCTOS (público) ---------- */
+  .productos{background:var(--ink-2);}
+  .prod-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:1.4rem;
+    margin-top:2.4rem;
+  }
+  .prod-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-md);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .prod-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    background:var(--surface-2) center/cover no-repeat;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted-dim);
+    font-size:.75rem;
+  }
+  .prod-body{padding:1rem 1.1rem 1.2rem; display:flex; flex-direction:column; gap:.4rem; flex:1;}
+  .prod-body h4{font-family:'Space Grotesk',sans-serif; font-size:1rem; color:var(--ivory);}
+  .prod-body p{font-size:.82rem; color:var(--muted); line-height:1.5; flex:1;}
+  .prod-foot{display:flex; align-items:center; justify-content:space-between; margin-top:.4rem;}
+  .prod-price{font-family:'Space Grotesk',sans-serif; color:var(--elec-bright); font-weight:600;}
+  .prod-stock{font-size:.72rem; color:var(--muted-dim);}
+  .prod-stock.agotado{color:var(--danger);}
+  .prod-empty{color:var(--muted); font-size:.9rem;}
+
+  /* ---------- selector de productos dentro del turnero ---------- */
+  .prod-picker{
+    display:flex; flex-direction:column; gap:.55rem;
+    margin:.3rem 0 1rem;
+    max-height:220px; overflow-y:auto;
+    padding-right:.3rem;
+  }
+  .prod-pick-item{
+    display:flex; align-items:center; gap:.7rem;
+    padding:.6rem .8rem;
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    background:var(--surface-2);
+    font-size:.84rem;
+    cursor:pointer;
+  }
+  .prod-pick-item input{accent-color:var(--elec-bright); width:16px; height:16px; flex-shrink:0;}
+  .prod-pick-item .ppi-name{flex:1; color:var(--ivory);}
+  .prod-pick-item .ppi-price{color:var(--muted); flex-shrink:0;}
+  .extras-total{font-size:.82rem; color:var(--muted); margin:-.4rem 0 1rem;}
+
+  /* ---------- botón admin (footer) ---------- */
+  .admin-link{
+    background:transparent; border:none; color:var(--muted-dim);
+    font-size:.76rem; cursor:pointer; text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .admin-link:hover{color:var(--muted);}
+
+  /* ---------- overlay genérico (login + panel admin) ---------- */
+  .overlay{
+    position:fixed; inset:0; z-index:5000;
+    background:rgba(5,6,10,.78);
+    backdrop-filter:blur(6px);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:5vh 1.2rem;
+    overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+  .overlay-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    width:100%;
+    padding:2rem;
+    position:relative;
+    animation:overlayIn .3s var(--ease);
+  }
+  @keyframes overlayIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .overlay-close{
+    position:absolute; top:1.1rem; right:1.1rem;
+    background:transparent; border:none; color:var(--muted);
+    font-size:1.3rem; cursor:pointer; line-height:1;
+  }
+  .overlay-close:hover{color:var(--ivory);}
+
+  /* login */
+  #loginOverlay .overlay-card{max-width:360px;}
+  .login-field{margin-bottom:1rem;}
+  .login-field label{display:block; font-size:.78rem; color:var(--muted); margin-bottom:.4rem;}
+  .login-field input{
+    width:100%; padding:.75rem .9rem;
+    background:var(--surface-2); border:1px solid var(--line);
+    border-radius:var(--r-sm); color:var(--ivory);
+  }
+  .login-field input:focus{outline:none; border-color:var(--elec-bright);}
+  .login-err{color:var(--danger); font-size:.8rem; min-height:1.2em; margin-bottom:.6rem;}
+
+  /* panel admin */
+  #adminOverlay .overlay-card{max-width:920px;}
+  .admin-tabs{display:flex; gap:.6rem; margin-bottom:1.6rem; flex-wrap:wrap;}
+  .admin-tab{
+    padding:.55rem 1.1rem; border-radius:var(--r-pill);
+    border:1px solid var(--line); background:transparent;
+    color:var(--muted); font-size:.82rem; cursor:pointer;
+    font-family:'Space Grotesk',sans-serif; font-weight:600;
+  }
+  .admin-tab.active{background:var(--elec); border-color:var(--elec); color:var(--ivory);}
+  .admin-pane{display:none;}
+  .admin-pane.active{display:block;}
+  .admin-form{
+    display:grid; grid-template-columns:1fr 1fr; gap:.8rem;
+    padding:1.2rem; border:1px dashed var(--line);
+    border-radius:var(--r-md); margin-bottom:1.4rem;
+  }
+  .admin-form .full{grid-column:1/-1;}
+  .admin-form label{display:block; font-size:.74rem; color:var(--muted); margin-bottom:.3rem;}
+  .admin-form input, .admin-form textarea{
+    width:100%; padding:.6rem .8rem;
+    background:var(--surface-2); border:1px solid var(--line);
+    border-radius:var(--r-sm); color:var(--ivory); font-size:.85rem;
+  }
+  .admin-form textarea{resize:vertical; min-height:60px;}
+  .admin-list{display:flex; flex-direction:column; gap:.6rem;}
+  .admin-row{
+    display:flex; align-items:center; gap:.9rem;
+    padding:.7rem .9rem; border:1px solid var(--line);
+    border-radius:var(--r-sm); background:var(--surface-2);
+    font-size:.83rem;
+  }
+  .admin-row img{width:42px; height:42px; border-radius:8px; object-fit:cover; flex-shrink:0;}
+  .admin-row .ar-info{flex:1; min-width:0;}
+  .admin-row .ar-info strong{color:var(--ivory); display:block;}
+  .admin-row .ar-info span{color:var(--muted-dim); font-size:.76rem;}
+  .admin-row .ar-actions{display:flex; gap:.4rem; flex-shrink:0;}
+  .admin-row .ar-actions button{
+    background:transparent; border:1px solid var(--line);
+    color:var(--muted); padding:.4rem .7rem; border-radius:var(--r-sm);
+    font-size:.74rem; cursor:pointer;
+  }
+  .admin-row .ar-actions button:hover{border-color:var(--elec-bright); color:var(--ivory);}
+  .admin-row .ar-actions button.danger:hover{border-color:var(--danger); color:var(--danger);}
+  .admin-empty{color:var(--muted-dim); font-size:.85rem; padding:.6rem 0;}
+  .admin-msg{font-size:.82rem; margin-top:.6rem; min-height:1.2em;}
+  .admin-msg.ok{color:#4ADE80;}
+  .admin-msg.error{color:var(--danger);}
+  .admin-topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;}
 </style>
 </head>
 <body>
@@ -1020,28 +1201,22 @@
         <h2>Precios claros, sin sorpresas.</h2>
         <p>Elegí el servicio al reservar tu turno — el precio queda confirmado desde el momento en que agendás.</p>
       </div>
-      <div class="price-grid reveal-stagger">
-        <div class="price-card reveal">
-          <span class="tag">Corte</span>
-          <h3>Corte de cabello</h3>
-          <div class="amount">$16.000</div>
-          <p>Corte de precisión con tijera y máquina, incluye lavado y peinado final.</p>
-          <a href="#reservas" class="btn btn-ghost">Reservar</a>
-        </div>
-        <div class="price-card featured reveal">
-          <span class="tag">Más elegido</span>
-          <h3>Corte y barba</h3>
-          <div class="amount">$17.000</div>
-          <p>El combo completo: corte de precisión más perfilado y definición de barba en el mismo turno.</p>
-          <a href="#reservas" class="btn">Reservar</a>
-        </div>
-        <div class="price-card reveal">
-          <span class="tag">Barba</span>
-          <h3>Barba</h3>
-          <div class="amount">$8.000</div>
-          <p>Perfilado de línea, densidad y contorno, ajustado a la forma del rostro.</p>
-          <a href="#reservas" class="btn btn-ghost">Reservar</a>
-        </div>
+      <div class="price-grid reveal-stagger" id="priceGrid">
+        <p class="prod-empty">Cargando servicios…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="productos" id="productos">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Productos</div>
+        <h2>Cuidado para llevar a casa.</h2>
+        <p>Sumalos a tu turno y te los tenemos listos para retirar el mismo día.</p>
+      </div>
+      <div class="prod-grid" id="prodGrid">
+        <p class="prod-empty">Cargando productos…</p>
       </div>
     </div>
   </section>
@@ -1151,6 +1326,37 @@
       </div>
 
       <div class="res-grid">
+        <div class="res-info reveal">
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <h4>Dirección</h4>
+              <p>Av. Manuel Belgrano 3821, B1872FWE Sarandí, Provincia de Buenos Aires</p>
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div>
+              <h4>Horario</h4>
+              <p>Lunes a sábado — 10:00 a 19:00 h<br>Solo con turno reservado</p>
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
+            <div>
+              <h4>WhatsApp</h4>
+              <p>+54 9 11 6258-8543</p>
+            </div>
+          </div>
+
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%ADCantidad,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
+              width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Ubicación de BLEUR en el mapa"></iframe>
+          </div>
+        </div>
+
         <div class="booking-widget reveal" id="bookingWidget">
           <div class="bw-step">
             <div class="bw-label"><span>1</span> Elegí el día</div>
@@ -1181,10 +1387,15 @@
               <div class="field full">
                 <label for="bkService">Servicio</label>
                 <select id="bkService">
-                  <option value="Corte — $16.000">Corte — $16.000</option>
-                  <option value="Barba — $8.000">Barba — $8.000</option>
-                  <option value="Corte y barba — $17.000">Corte y barba — $17.000</option>
+                  <option value="">Cargando servicios…</option>
                 </select>
+              </div>
+              <div class="field full">
+                <label>Sumá productos a tu turno (opcional)</label>
+                <div class="prod-picker" id="prodPicker">
+                  <p class="admin-empty">Cargando productos…</p>
+                </div>
+                <div class="extras-total" id="extrasTotal"></div>
               </div>
             </div>
             <button type="button" class="btn" id="confirmBtn">Confirmar turno de 30 min</button>
@@ -1220,28 +1431,89 @@
         <a href="#reservas">Barba — $8.000</a>
         <a href="#reservas">Corte y barba — $17.000</a>
       </div>
-      <div class="foot-col foot-info">
+      <div class="foot-col">
         <h5>Contacto</h5>
-        <p>Av. Manuel Belgrano 3821<br>Sarandí, Buenos Aires</p>
-        <p>Lunes a sábado<br>10:00 a 19:00 h</p>
-        <a href="https://wa.me/5491162588543" target="_blank" rel="noopener">+54 9 11 6258-8543</a>
-        <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Ver en Google Maps →</a>
+        <a href="https://wa.me/5491162588543" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.google.com/maps/place/Bleur+Barberia/@-34.6890961,-58.3439072,17z/data=!3m1!4b1!4m6!3m5!1s0x95a333dedeec6ac7:0x8547b983c685b363!8m2!3d-34.6890961!4d-58.3413323!16s%2Fg%2F11s9gk_34c" target="_blank" rel="noopener">Google Maps</a>
       </div>
     </div>
-
-    <div class="map-embed foot-map">
-      <iframe
-        src="https://www.google.com/maps?q=Av.+Manuel+Belgrano+3821,+B1872FWE+Sarand%C3%ADCantidad,+Provincia+de+Buenos+Aires,+Argentina&output=embed"
-        width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Ubicación de BLEUR en el mapa"></iframe>
-    </div>
-
     <div class="foot-bottom">
       <span>© 2026 BLEUR Barbería — Sarandí.</span>
       <span>Reservas online, turnos reales.</span>
+      <button type="button" class="admin-link" id="openLoginBtn">Admin</button>
     </div>
   </div>
 </footer>
+
+<!-- ===================== LOGIN ADMIN ===================== -->
+<div class="overlay" id="loginOverlay">
+  <div class="overlay-card">
+    <button type="button" class="overlay-close" id="closeLoginBtn">✕</button>
+    <div class="eyebrow" style="margin-bottom:1rem;">Acceso admin</div>
+    <div class="login-field">
+      <label for="loginUser">Usuario</label>
+      <input type="text" id="loginUser" autocomplete="username" placeholder="admin">
+    </div>
+    <div class="login-field">
+      <label for="loginPass">Contraseña</label>
+      <input type="password" id="loginPass" autocomplete="current-password" placeholder="••••">
+    </div>
+    <p class="login-err" id="loginErr"></p>
+    <button type="button" class="btn" id="loginSubmitBtn" style="width:100%; justify-content:center;">Ingresar</button>
+  </div>
+</div>
+
+<!-- ===================== PANEL ADMIN ===================== -->
+<div class="overlay" id="adminOverlay">
+  <div class="overlay-card">
+    <button type="button" class="overlay-close" id="closeAdminBtn">✕</button>
+    <div class="admin-topbar">
+      <div class="eyebrow" style="margin:0;">Panel BLEUR</div>
+      <button type="button" class="btn btn-ghost" id="logoutBtn" style="padding:.5rem 1rem; font-size:.75rem;">Cerrar sesión</button>
+    </div>
+    <div class="admin-tabs">
+      <button type="button" class="admin-tab active" data-tab="servicios">Servicios</button>
+      <button type="button" class="admin-tab" data-tab="productos">Productos</button>
+      <button type="button" class="admin-tab" data-tab="turnos">Turnos</button>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="admin-pane active" id="paneServicios">
+      <div class="admin-form" id="servForm">
+        <div class="full"><label>Nombre</label><input type="text" id="servNombre" placeholder="Ej: Corte de cabello"></div>
+        <div class="full"><label>Descripción</label><textarea id="servDescripcion" placeholder="Descripción corta del servicio"></textarea></div>
+        <div><label>Precio ($)</label><input type="number" id="servPrecio" placeholder="16000"></div>
+        <div style="display:flex; align-items:flex-end;">
+          <button type="button" class="btn" id="servSaveBtn" style="width:100%; justify-content:center;">Agregar servicio</button>
+        </div>
+      </div>
+      <p class="admin-msg" id="servMsg"></p>
+      <div class="admin-list" id="servList"></div>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="admin-pane" id="paneProductos">
+      <div class="admin-form" id="prodForm">
+        <div class="full"><label>Nombre</label><input type="text" id="prodNombre" placeholder="Ej: Crema de afeitar"></div>
+        <div class="full"><label>Descripción</label><textarea id="prodDescripcion" placeholder="Descripción corta del producto"></textarea></div>
+        <div><label>Precio ($)</label><input type="number" id="prodPrecio" placeholder="5000"></div>
+        <div><label>Stock</label><input type="number" id="prodStock" placeholder="10"></div>
+        <div class="full"><label>Foto</label><input type="file" id="prodFoto" accept="image/*"></div>
+        <div class="full" style="display:flex; align-items:flex-end;">
+          <button type="button" class="btn" id="prodSaveBtn" style="width:100%; justify-content:center;">Agregar producto</button>
+        </div>
+      </div>
+      <p class="admin-msg" id="prodMsg"></p>
+      <div class="admin-list" id="prodList"></div>
+    </div>
+
+    <!-- TURNOS -->
+    <div class="admin-pane" id="paneTurnos">
+      <p class="admin-msg" id="turnosMsg" style="margin-bottom:1rem;"></p>
+      <div class="admin-list" id="turnosList"></div>
+    </div>
+  </div>
+</div>
 
 <script>
   // header state on scroll
@@ -1300,9 +1572,19 @@
 
   const BUSINESS_WHATSAPP = '5491162588543'; // +54 9 11 6258-8543
 
+  // El login del admin usa un email fijo por detrás. La persona solo ve
+  // "usuario / contraseña" en el cartel — esto es una implementación, no
+  // algo que tengas que tocar.
+  const ADMIN_EMAIL = 'admin@bleur.local';
+
+  const money = n => '$' + Number(n || 0).toLocaleString('es-AR');
+
   let occupied = new Set();     // claves "YYYY-MM-DD|HH:MM" ya reservadas
   let selectedDate = null;
   let selectedSlot = null;
+  let servicios = [];           // cache de servicios activos (público)
+  let productos = [];           // cache de productos activos (público)
+  let selectedProductIds = [];  // productos elegidos en el turno actual
 
   function dateKey(d){
     const y = d.getFullYear();
@@ -1335,6 +1617,123 @@
       slots.push(`${h}:${m}`);
     }
     return slots;
+  }
+
+  // ===================================================================
+  //  SERVICIOS Y PRODUCTOS — cargados desde Supabase (el admin los edita)
+  // ===================================================================
+
+  async function loadServicios(){
+    if(!supabaseReady) return;
+    const { data, error } = await db.from('servicios').select('*').eq('activo', true).order('orden');
+    if(error){ console.error('Error cargando servicios:', error); return; }
+    servicios = data || [];
+  }
+
+  async function loadProductos(){
+    if(!supabaseReady) return;
+    const { data, error } = await db.from('productos').select('*').eq('activo', true).order('orden');
+    if(error){ console.error('Error cargando productos:', error); return; }
+    productos = data || [];
+  }
+
+  function renderPriceGrid(){
+    const grid = document.getElementById('priceGrid');
+    if(!grid) return;
+    if(!servicios.length){
+      grid.innerHTML = '<p class="prod-empty">Todavía no hay servicios cargados.</p>';
+      return;
+    }
+    grid.innerHTML = servicios.map((s, i) => `
+      <div class="price-card ${i === 1 ? 'featured' : ''} reveal" style="opacity:1; transform:none;">
+        <span class="tag">${i === 1 ? 'Más elegido' : 'Servicio'}</span>
+        <h3>${escapeHtml(s.nombre)}</h3>
+        <div class="amount">${money(s.precio)}</div>
+        <p>${escapeHtml(s.descripcion || '')}</p>
+        <a href="#reservas" class="btn ${i === 1 ? '' : 'btn-ghost'}">Reservar</a>
+      </div>
+    `).join('');
+  }
+
+  function renderServiceSelect(){
+    const sel = document.getElementById('bkService');
+    if(!sel) return;
+    if(!servicios.length){
+      sel.innerHTML = '<option value="">No hay servicios cargados</option>';
+      return;
+    }
+    sel.innerHTML = servicios.map(s =>
+      `<option value="${escapeHtml(s.nombre)} — ${money(s.precio)}">${escapeHtml(s.nombre)} — ${money(s.precio)}</option>`
+    ).join('');
+  }
+
+  function renderProdGrid(){
+    const grid = document.getElementById('prodGrid');
+    if(!grid) return;
+    if(!productos.length){
+      grid.innerHTML = '<p class="prod-empty">Todavía no hay productos cargados.</p>';
+      return;
+    }
+    grid.innerHTML = productos.map(p => `
+      <div class="prod-card reveal" style="opacity:1; transform:none;">
+        <div class="prod-photo" style="${p.foto_url ? `background-image:url('${p.foto_url}')` : ''}">${p.foto_url ? '' : 'Sin foto'}</div>
+        <div class="prod-body">
+          <h4>${escapeHtml(p.nombre)}</h4>
+          <p>${escapeHtml(p.descripcion || '')}</p>
+          <div class="prod-foot">
+            <span class="prod-price">${money(p.precio)}</span>
+            <span class="prod-stock ${p.stock <= 0 ? 'agotado' : ''}">${p.stock <= 0 ? 'Sin stock' : p.stock + ' en stock'}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderProdPicker(){
+    const wrap = document.getElementById('prodPicker');
+    if(!wrap) return;
+    const disponibles = productos.filter(p => p.stock > 0);
+    if(!disponibles.length){
+      wrap.innerHTML = '<p class="admin-empty">No hay productos disponibles ahora mismo.</p>';
+      updateExtrasTotal();
+      return;
+    }
+    wrap.innerHTML = disponibles.map(p => `
+      <label class="prod-pick-item">
+        <input type="checkbox" value="${p.id}" data-nombre="${escapeHtml(p.nombre)}" data-precio="${p.precio}">
+        <span class="ppi-name">${escapeHtml(p.nombre)}</span>
+        <span class="ppi-price">${money(p.precio)}</span>
+      </label>
+    `).join('');
+    wrap.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', updateExtrasTotal);
+    });
+    updateExtrasTotal();
+  }
+
+  function getSelectedProducts(){
+    const wrap = document.getElementById('prodPicker');
+    if(!wrap) return [];
+    return Array.from(wrap.querySelectorAll('input[type="checkbox"]:checked')).map(cb => ({
+      id: cb.value,
+      nombre: cb.dataset.nombre,
+      precio: Number(cb.dataset.precio)
+    }));
+  }
+
+  function updateExtrasTotal(){
+    const el = document.getElementById('extrasTotal');
+    if(!el) return;
+    const sel = getSelectedProducts();
+    if(!sel.length){ el.textContent = ''; return; }
+    const total = sel.reduce((acc, p) => acc + p.precio, 0);
+    el.textContent = `Extras seleccionados: ${sel.map(p => p.nombre).join(', ')} · Total extra: ${money(total)}`;
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str == null ? '' : String(str);
+    return d.innerHTML;
   }
 
   async function loadOccupied(){
@@ -1422,6 +1821,7 @@
     const step = document.getElementById('contactStep');
     step.classList.add('open');
     updateSummary();
+    renderProdPicker();
     const msgEl = document.getElementById('bwMsg');
     msgEl.textContent = '';
     msgEl.classList.remove('error');
@@ -1466,13 +1866,18 @@
     const service = serviceEl.value;
     const dateLabel = selectedDate.toLocaleDateString('es-AR', {weekday:'long', day:'numeric', month:'long'});
     const timeLabel = selectedSlot;
+    const extras = getSelectedProducts();
+    const extrasTotal = extras.reduce((acc, p) => acc + p.precio, 0);
+    const extrasTexto = extras.map(p => `${p.nombre} (${money(p.precio)})`).join(', ');
 
     const { error } = await db.from('reservas').insert([{
       fecha: key,
       hora: selectedSlot,
       servicio: service,
       nombre: name,
-      telefono: phone
+      telefono: phone,
+      productos_texto: extrasTexto || null,
+      extras_total: extrasTotal
     }]);
 
     btn.textContent = originalLabel;
@@ -1491,13 +1896,25 @@
       return;
     }
 
+    // Descuenta stock de los productos elegidos (función segura, no requiere login)
+    if(extras.length){
+      const { error: stockErr } = await db.rpc('descontar_stock', { ids: extras.map(p => p.id) });
+      if(stockErr) console.error('No se pudo descontar stock:', stockErr);
+      await loadProductos();
+      renderProdGrid();
+    }
+
     occupied.add(`${key}|${selectedSlot}`);
     msgEl.textContent = '¡Turno confirmado! Te redirigimos a WhatsApp para avisarnos.';
 
-    // envía un WhatsApp de confirmación con servicio, día, horario y datos del cliente
-    const waText =
+    // envía un WhatsApp de confirmación con servicio, productos, día, horario y datos del cliente
+    let waText =
       `Hola BLEUR, quiero confirmar mi turno:%0A` +
-      `Servicio: ${service}%0A` +
+      `Servicio: ${service}%0A`;
+    if(extras.length){
+      waText += `Productos: ${extrasTexto} (extra: ${money(extrasTotal)})%0A`;
+    }
+    waText +=
       `Día: ${dateLabel}%0A` +
       `Horario: ${timeLabel} h%0A` +
       `Nombre: ${name}%0A` +
@@ -1508,6 +1925,7 @@
     nameEl.value = '';
     phoneEl.value = '';
     selectedSlot = null;
+    selectedProductIds = [];
     closeContactStep();
   }
 
@@ -1515,15 +1933,317 @@
   if(confirmBtn) confirmBtn.addEventListener('click', confirmBooking);
 
   (async function initBooking(){
-    const daySelector = document.getElementById('daySelector');
-    if(!daySelector) return;
     if(!supabaseReady){
-      daySelector.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar el calendario.</p>';
+      const daySelector = document.getElementById('daySelector');
+      if(daySelector) daySelector.innerHTML = '<p class="bw-hint">Conectá Supabase (ver comentario en el código) para activar el calendario.</p>';
+      const priceGrid = document.getElementById('priceGrid');
+      if(priceGrid) priceGrid.innerHTML = '<p class="prod-empty">Conectá Supabase para mostrar los servicios.</p>';
+      const prodGrid = document.getElementById('prodGrid');
+      if(prodGrid) prodGrid.innerHTML = '<p class="prod-empty">Conectá Supabase para mostrar los productos.</p>';
       return;
     }
-    await loadOccupied();
+    await Promise.all([loadServicios(), loadProductos(), loadOccupied()]);
+    renderPriceGrid();
+    renderServiceSelect();
+    renderProdGrid();
     renderDays();
   })();
+
+  // ===================================================================
+  //  LOGIN + PANEL ADMIN
+  // ===================================================================
+
+  function showOverlay(id){ document.getElementById(id).classList.add('open'); }
+  function hideOverlay(id){ document.getElementById(id).classList.remove('open'); }
+
+  async function getSession(){
+    if(!supabaseReady) return null;
+    const { data } = await db.auth.getSession();
+    return data.session;
+  }
+
+  async function handleLogin(){
+    const userEl = document.getElementById('loginUser');
+    const passEl = document.getElementById('loginPass');
+    const errEl = document.getElementById('loginErr');
+    errEl.textContent = '';
+
+    const user = userEl.value.trim().toLowerCase();
+    const pass = passEl.value;
+
+    if(!supabaseReady){
+      errEl.textContent = 'Supabase no está conectado.';
+      return;
+    }
+    if(user !== 'admin' || !pass){
+      errEl.textContent = 'Usuario o contraseña incorrectos.';
+      return;
+    }
+
+    const { error } = await db.auth.signInWithPassword({ email: ADMIN_EMAIL, password: pass });
+    if(error){
+      errEl.textContent = 'Usuario o contraseña incorrectos.';
+      return;
+    }
+
+    passEl.value = '';
+    hideOverlay('loginOverlay');
+    await openAdminPanel();
+  }
+
+  async function handleLogout(){
+    if(supabaseReady) await db.auth.signOut();
+    hideOverlay('adminOverlay');
+  }
+
+  async function openAdminPanel(){
+    showOverlay('adminOverlay');
+    await Promise.all([renderAdminServicios(), renderAdminProductos(), renderAdminTurnos()]);
+  }
+
+  const openLoginBtn = document.getElementById('openLoginBtn');
+  if(openLoginBtn) openLoginBtn.addEventListener('click', async () => {
+    const session = await getSession();
+    if(session){ openAdminPanel(); } else { showOverlay('loginOverlay'); }
+  });
+  const closeLoginBtn = document.getElementById('closeLoginBtn');
+  if(closeLoginBtn) closeLoginBtn.addEventListener('click', () => hideOverlay('loginOverlay'));
+  const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+  if(loginSubmitBtn) loginSubmitBtn.addEventListener('click', handleLogin);
+  const closeAdminBtn = document.getElementById('closeAdminBtn');
+  if(closeAdminBtn) closeAdminBtn.addEventListener('click', () => hideOverlay('adminOverlay'));
+  const logoutBtn = document.getElementById('logoutBtn');
+  if(logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
+  document.querySelectorAll('.admin-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const pane = document.getElementById('pane' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1));
+      if(pane) pane.classList.add('active');
+    });
+  });
+
+  // ---------- ADMIN: SERVICIOS ----------
+
+  async function renderAdminServicios(){
+    const list = document.getElementById('servList');
+    const { data, error } = await db.from('servicios').select('*').order('orden');
+    if(error){ list.innerHTML = '<p class="admin-empty">No se pudo cargar servicios.</p>'; return; }
+    if(!data.length){ list.innerHTML = '<p class="admin-empty">No hay servicios cargados.</p>'; return; }
+    list.innerHTML = data.map(s => `
+      <div class="admin-row" data-id="${s.id}">
+        <div class="ar-info">
+          <strong>${escapeHtml(s.nombre)} — ${money(s.precio)}</strong>
+          <span>${escapeHtml(s.descripcion || '')}</span>
+        </div>
+        <div class="ar-actions">
+          <button type="button" class="edit-serv">Editar</button>
+          <button type="button" class="danger del-serv">Eliminar</button>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.del-serv').forEach(b => b.addEventListener('click', async (e) => {
+      const id = e.target.closest('.admin-row').dataset.id;
+      if(!confirm('¿Eliminar este servicio?')) return;
+      await db.from('servicios').delete().eq('id', id);
+      await renderAdminServicios();
+      await loadServicios(); renderPriceGrid(); renderServiceSelect();
+    }));
+    list.querySelectorAll('.edit-serv').forEach(b => b.addEventListener('click', async (e) => {
+      const row = e.target.closest('.admin-row');
+      const id = row.dataset.id;
+      const s = data.find(x => x.id === id);
+      document.getElementById('servNombre').value = s.nombre;
+      document.getElementById('servDescripcion').value = s.descripcion || '';
+      document.getElementById('servPrecio').value = s.precio;
+      document.getElementById('servSaveBtn').textContent = 'Guardar cambios';
+      document.getElementById('servSaveBtn').dataset.editId = id;
+    }));
+  }
+
+  document.getElementById('servSaveBtn').addEventListener('click', async () => {
+    const nombre = document.getElementById('servNombre').value.trim();
+    const descripcion = document.getElementById('servDescripcion').value.trim();
+    const precio = Number(document.getElementById('servPrecio').value);
+    const msgEl = document.getElementById('servMsg');
+    const saveBtn = document.getElementById('servSaveBtn');
+
+    if(!nombre || !precio){
+      msgEl.textContent = 'Completá nombre y precio.';
+      msgEl.className = 'admin-msg error';
+      return;
+    }
+
+    const editId = saveBtn.dataset.editId;
+    let error;
+    if(editId){
+      ({ error } = await db.from('servicios').update({ nombre, descripcion, precio }).eq('id', editId));
+    } else {
+      ({ error } = await db.from('servicios').insert([{ nombre, descripcion, precio }]));
+    }
+
+    if(error){
+      msgEl.textContent = 'No se pudo guardar. Revisá tu sesión.';
+      msgEl.className = 'admin-msg error';
+      return;
+    }
+
+    msgEl.textContent = 'Guardado con éxito.';
+    msgEl.className = 'admin-msg ok';
+    document.getElementById('servNombre').value = '';
+    document.getElementById('servDescripcion').value = '';
+    document.getElementById('servPrecio').value = '';
+    saveBtn.textContent = 'Agregar servicio';
+    delete saveBtn.dataset.editId;
+
+    await renderAdminServicios();
+    await loadServicios(); renderPriceGrid(); renderServiceSelect();
+  });
+
+  // ---------- ADMIN: PRODUCTOS ----------
+
+  async function renderAdminProductos(){
+    const list = document.getElementById('prodList');
+    const { data, error } = await db.from('productos').select('*').order('orden');
+    if(error){ list.innerHTML = '<p class="admin-empty">No se pudo cargar productos.</p>'; return; }
+    if(!data.length){ list.innerHTML = '<p class="admin-empty">No hay productos cargados.</p>'; return; }
+    list.innerHTML = data.map(p => `
+      <div class="admin-row" data-id="${p.id}">
+        ${p.foto_url ? `<img src="${p.foto_url}" alt="">` : ''}
+        <div class="ar-info">
+          <strong>${escapeHtml(p.nombre)} — ${money(p.precio)}</strong>
+          <span>Stock: ${p.stock} · ${escapeHtml(p.descripcion || '')}</span>
+        </div>
+        <div class="ar-actions">
+          <button type="button" class="edit-prod">Editar</button>
+          <button type="button" class="danger del-prod">Eliminar</button>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.del-prod').forEach(b => b.addEventListener('click', async (e) => {
+      const id = e.target.closest('.admin-row').dataset.id;
+      if(!confirm('¿Eliminar este producto?')) return;
+      await db.from('productos').delete().eq('id', id);
+      await renderAdminProductos();
+      await loadProductos(); renderProdGrid();
+    }));
+    list.querySelectorAll('.edit-prod').forEach(b => b.addEventListener('click', (e) => {
+      const row = e.target.closest('.admin-row');
+      const id = row.dataset.id;
+      const p = data.find(x => x.id === id);
+      document.getElementById('prodNombre').value = p.nombre;
+      document.getElementById('prodDescripcion').value = p.descripcion || '';
+      document.getElementById('prodPrecio').value = p.precio;
+      document.getElementById('prodStock').value = p.stock;
+      document.getElementById('prodSaveBtn').textContent = 'Guardar cambios';
+      document.getElementById('prodSaveBtn').dataset.editId = id;
+    }));
+  }
+
+  document.getElementById('prodSaveBtn').addEventListener('click', async () => {
+    const nombre = document.getElementById('prodNombre').value.trim();
+    const descripcion = document.getElementById('prodDescripcion').value.trim();
+    const precio = Number(document.getElementById('prodPrecio').value);
+    const stock = Number(document.getElementById('prodStock').value || 0);
+    const fotoInput = document.getElementById('prodFoto');
+    const msgEl = document.getElementById('prodMsg');
+    const saveBtn = document.getElementById('prodSaveBtn');
+
+    if(!nombre || !precio){
+      msgEl.textContent = 'Completá nombre y precio.';
+      msgEl.className = 'admin-msg error';
+      return;
+    }
+
+    saveBtn.disabled = true;
+    let foto_url = null;
+
+    if(fotoInput.files && fotoInput.files[0]){
+      const file = fotoInput.files[0];
+      const path = `${Date.now()}_${file.name}`;
+      const { error: upErr } = await db.storage.from('productos').upload(path, file);
+      if(upErr){
+        msgEl.textContent = 'No se pudo subir la foto (¿creaste el bucket "productos" público en Supabase?).';
+        msgEl.className = 'admin-msg error';
+        saveBtn.disabled = false;
+        return;
+      }
+      foto_url = db.storage.from('productos').getPublicUrl(path).data.publicUrl;
+    }
+
+    const payload = { nombre, descripcion, precio, stock };
+    if(foto_url) payload.foto_url = foto_url;
+
+    const editId = saveBtn.dataset.editId;
+    let error;
+    if(editId){
+      ({ error } = await db.from('productos').update(payload).eq('id', editId));
+    } else {
+      ({ error } = await db.from('productos').insert([payload]));
+    }
+
+    saveBtn.disabled = false;
+
+    if(error){
+      msgEl.textContent = 'No se pudo guardar. Revisá tu sesión.';
+      msgEl.className = 'admin-msg error';
+      return;
+    }
+
+    msgEl.textContent = 'Guardado con éxito.';
+    msgEl.className = 'admin-msg ok';
+    document.getElementById('prodNombre').value = '';
+    document.getElementById('prodDescripcion').value = '';
+    document.getElementById('prodPrecio').value = '';
+    document.getElementById('prodStock').value = '';
+    fotoInput.value = '';
+    saveBtn.textContent = 'Agregar producto';
+    delete saveBtn.dataset.editId;
+
+    await renderAdminProductos();
+    await loadProductos(); renderProdGrid();
+  });
+
+  // ---------- ADMIN: TURNOS (ver y cancelar) ----------
+
+  async function renderAdminTurnos(){
+    const list = document.getElementById('turnosList');
+    const msgEl = document.getElementById('turnosMsg');
+    const hoy = dateKey(new Date());
+    const { data, error } = await db.from('reservas').select('*').gte('fecha', hoy).order('fecha').order('hora');
+    if(error){
+      list.innerHTML = '';
+      msgEl.textContent = 'No se pudieron cargar los turnos.';
+      msgEl.className = 'admin-msg error';
+      return;
+    }
+    msgEl.textContent = '';
+    if(!data.length){ list.innerHTML = '<p class="admin-empty">No hay turnos próximos.</p>'; return; }
+    list.innerHTML = data.map(r => `
+      <div class="admin-row" data-id="${r.id}">
+        <div class="ar-info">
+          <strong>${r.fecha} · ${r.hora} — ${escapeHtml(r.nombre)}</strong>
+          <span>${escapeHtml(r.servicio)}${r.productos_texto ? ' · ' + escapeHtml(r.productos_texto) : ''} · ${escapeHtml(r.telefono)}</span>
+        </div>
+        <div class="ar-actions">
+          <button type="button" class="danger del-turno">Cancelar turno</button>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.del-turno').forEach(b => b.addEventListener('click', async (e) => {
+      const id = e.target.closest('.admin-row').dataset.id;
+      if(!confirm('¿Cancelar este turno? Se libera el horario en la web.')) return;
+      await db.from('reservas').delete().eq('id', id);
+      await renderAdminTurnos();
+      await loadOccupied();
+      renderSlots();
+    }));
+  }
 </script>
 
 </body>
