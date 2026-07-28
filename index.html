@@ -1048,6 +1048,65 @@
     </div>
   </section>
 
+  <!-- RESERVAS -->
+  <section class="reservas" id="reservas">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Reservas</div>
+        <h2>Reservá tu turno de 30 minutos.</h2>
+        <p>Elegí el día y el horario. Una vez confirmado, ese turno queda bloqueado al instante para cualquier otra persona — la disponibilidad es real, no simulada.</p>
+      </div>
+
+      <div class="res-grid">
+        <div class="booking-widget reveal" id="bookingWidget">
+          <div class="bw-step">
+            <div class="bw-label"><span>1</span> Elegí el día</div>
+            <div class="day-scroll" id="daySelector">
+              <p class="bw-loading">Cargando calendario…</p>
+            </div>
+          </div>
+
+          <div class="bw-step">
+            <div class="bw-label"><span>2</span> Elegí el horario <em>(turnos de 30 min)</em></div>
+            <div class="slot-grid" id="slotGrid">
+              <p class="bw-hint">Seleccioná primero un día.</p>
+            </div>
+          </div>
+
+          <div class="bw-step bw-contact" id="contactStep">
+            <div class="bw-label"><span>3</span> Tus datos</div>
+            <div class="bw-summary" id="bwSummary"></div>
+            <div class="field-grid">
+              <div class="field full">
+                <label for="bkName">Nombre completo</label>
+                <input id="bkName" type="text" placeholder="Tu nombre" required>
+              </div>
+              <div class="field full">
+                <label for="bkPhone">Teléfono</label>
+                <input id="bkPhone" type="tel" placeholder="+54 9 ..." required>
+              </div>
+              <div class="field full">
+                <label for="bkService">Servicio</label>
+                <select id="bkService">
+                  <option value="">Cargando servicios…</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Sumá productos a tu turno (opcional)</label>
+                <div class="prod-picker" id="prodPicker">
+                  <p class="admin-empty">Cargando productos…</p>
+                </div>
+                <div class="extras-total" id="extrasTotal"></div>
+              </div>
+            </div>
+            <button type="button" class="btn" id="confirmBtn">Confirmar turno de 30 min</button>
+            <p class="bw-msg" id="bwMsg"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- EQUIPO -->
   <section class="equipo" id="equipo">
     <div class="container">
@@ -1137,65 +1196,6 @@
               <div class="test-name">Santiago</div>
               <div class="test-role">Reseña de Google</div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESERVAS -->
-  <section class="reservas" id="reservas">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">Reservas</div>
-        <h2>Reservá tu turno de 30 minutos.</h2>
-        <p>Elegí el día y el horario. Una vez confirmado, ese turno queda bloqueado al instante para cualquier otra persona — la disponibilidad es real, no simulada.</p>
-      </div>
-
-      <div class="res-grid">
-        <div class="booking-widget reveal" id="bookingWidget">
-          <div class="bw-step">
-            <div class="bw-label"><span>1</span> Elegí el día</div>
-            <div class="day-scroll" id="daySelector">
-              <p class="bw-loading">Cargando calendario…</p>
-            </div>
-          </div>
-
-          <div class="bw-step">
-            <div class="bw-label"><span>2</span> Elegí el horario <em>(turnos de 30 min)</em></div>
-            <div class="slot-grid" id="slotGrid">
-              <p class="bw-hint">Seleccioná primero un día.</p>
-            </div>
-          </div>
-
-          <div class="bw-step bw-contact" id="contactStep">
-            <div class="bw-label"><span>3</span> Tus datos</div>
-            <div class="bw-summary" id="bwSummary"></div>
-            <div class="field-grid">
-              <div class="field full">
-                <label for="bkName">Nombre completo</label>
-                <input id="bkName" type="text" placeholder="Tu nombre" required>
-              </div>
-              <div class="field full">
-                <label for="bkPhone">Teléfono</label>
-                <input id="bkPhone" type="tel" placeholder="+54 9 ..." required>
-              </div>
-              <div class="field full">
-                <label for="bkService">Servicio</label>
-                <select id="bkService">
-                  <option value="">Cargando servicios…</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label>Sumá productos a tu turno (opcional)</label>
-                <div class="prod-picker" id="prodPicker">
-                  <p class="admin-empty">Cargando productos…</p>
-                </div>
-                <div class="extras-total" id="extrasTotal"></div>
-              </div>
-            </div>
-            <button type="button" class="btn" id="confirmBtn">Confirmar turno de 30 min</button>
-            <p class="bw-msg" id="bwMsg"></p>
           </div>
         </div>
       </div>
