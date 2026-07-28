@@ -906,19 +906,13 @@
     .field-grid{grid-template-columns:1fr;}
     .foot-top{grid-template-columns:1fr 1fr; row-gap:2.2rem;}
   }
-  @media (max-width:560px){
-    section{padding:5.5rem 0;}
-    .foot-top{grid-template-columns:1fr;}
-    .heritage .container{grid-template-columns:1fr 1fr;}
-    .test-grid{grid-template-columns:1fr;}
-    .barber-card{padding:1.8rem;}
-
-    /* hero: círculo más chico y la placa de reseñas ya no flota superpuesta */
+  @media (max-width:760px){
+    /* hero: círculo más chico y la placa de reseñas ya no flota superpuesta ni pisa el "Explorar" */
     .hero{min-height:auto; padding-bottom:5rem;}
-    .hero-visual{max-width:190px; margin-top:2rem;}
+    .hero-visual{max-width:210px; margin:2rem auto 0;}
     .hero-stats{
       position:static;
-      margin:1rem auto 0;
+      margin:1.2rem auto 0;
       width:fit-content;
       min-width:0;
       padding:.8rem 1.2rem;
@@ -926,6 +920,13 @@
     }
     .hero-stats .num{font-size:1.3rem;}
     .scroll-cue{display:none;}
+  }
+  @media (max-width:560px){
+    section{padding:5.5rem 0;}
+    .foot-top{grid-template-columns:1fr;}
+    .heritage .container{grid-template-columns:1fr 1fr;}
+    .test-grid{grid-template-columns:1fr;}
+    .barber-card{padding:1.8rem;}
   }
 
 
