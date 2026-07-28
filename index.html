@@ -230,7 +230,8 @@
   }
   .hero-grid{
     display:grid;
-    grid-template-columns:1.15fr .85fr;
+    grid-template-columns:1fr;
+    max-width:760px;
     gap:4rem;
     align-items:center;
     width:100%;
@@ -268,68 +269,7 @@
     color:var(--muted-dim);
   }
 
-  /* signature hero visual: engineered blade + 30-min dial, no stock photography */
-  .hero-visual{
-    position:relative;
-    aspect-ratio:1/1;
-    max-width:460px;
-    margin:0 auto;
-  }
-  .hero-visual svg{width:100%;height:100%;display:block;}
-  .hero-stats{
-    position:absolute;
-    left:-1.2rem;
-    bottom:-1.4rem;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--r-md);
-    padding:1.3rem 1.6rem;
-    z-index:3;
-    min-width:180px;
-    backdrop-filter:blur(8px);
-  }
-  .hero-stats .num{
-    font-family:'JetBrains Mono',monospace;
-    font-weight:600;
-    font-size:1.7rem;
-    color:var(--elec-bright);
-    display:block;
-  }
-  .hero-stats .lbl{
-    font-size:.7rem;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-top:.2rem;
-  }
-
-  .scroll-cue{
-    position:absolute;
-    bottom:2.4rem;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:.6rem;
-    z-index:2;
-  }
-  .scroll-cue .line{
-    width:1px;height:46px;
-    background:linear-gradient(180deg, var(--elec-bright), transparent);
-    animation:cuepulse 2.2s var(--ease) infinite;
-  }
-  .scroll-cue span{
-    font-size:.66rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--muted);
-  }
-  @keyframes cuepulse{
-    0%{opacity:.2; transform:scaleY(.4); transform-origin:top;}
-    50%{opacity:1; transform:scaleY(1); transform-origin:top;}
-    100%{opacity:.2; transform:scaleY(.4); transform-origin:top;}
-  }
+  /* (hero-visual, hero-stats y scroll-cue se quitaron: eran contenido decorativo de relleno) */
 
   /* ---------- reveal ---------- */
   .reveal{
@@ -363,71 +303,6 @@
     font-size:1rem;
     line-height:1.75;
     max-width:52ch;
-  }
-
-  /* ---------- técnica / rituals ---------- */
-  .tecnica{background:var(--ink-2);}
-  .rituals{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:1.2rem;
-  }
-  .ritual{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--r-lg);
-    padding:2.6rem;
-    position:relative;
-    transition:border-color .4s var(--ease), transform .4s var(--ease);
-  }
-  .ritual:hover{border-color:rgba(46,143,255,.4); transform:translateY(-4px);}
-  .ritual .mark{
-    font-family:'JetBrains Mono',monospace;
-    font-size:.85rem;
-    color:var(--elec-bright);
-    display:block;
-    margin-bottom:1.4rem;
-  }
-  .ritual h3{
-    font-size:1.3rem;
-    color:var(--ivory);
-    margin-bottom:.9rem;
-    font-weight:600;
-  }
-  .ritual p{
-    color:var(--muted);
-    font-size:.95rem;
-    line-height:1.7;
-    max-width:44ch;
-  }
-
-  /* ---------- heritage strip ---------- */
-  .heritage{padding:0;}
-  .heritage .container{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:1.2rem;
-    margin-top:1.2rem;
-  }
-  .heritage-item{
-    padding:2.4rem 1.6rem;
-    text-align:center;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--r-md);
-  }
-  .heritage-item .num{
-    font-family:'JetBrains Mono',monospace;
-    font-weight:600;
-    font-size:2rem;
-    color:var(--elec-bright);
-  }
-  .heritage-item .lbl{
-    margin-top:.5rem;
-    font-size:.72rem;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    color:var(--muted);
   }
 
   /* ---------- servicios ---------- */
@@ -900,9 +775,6 @@
   @media (max-width:980px){
     nav.mainnav{display:none;}
     .hero-grid{grid-template-columns:1fr; text-align:left;}
-    .hero-visual{margin-top:3rem; max-width:280px;}
-    .rituals{grid-template-columns:1fr;}
-    .heritage .container{grid-template-columns:repeat(2,1fr);}
     .price-grid{grid-template-columns:1fr;}
     .barber-card{grid-template-columns:1fr; text-align:left;}
     .barber-avatar{max-width:220px;}
@@ -912,24 +784,11 @@
     .foot-info{grid-template-columns:1fr; gap:1.4rem;}
   }
   @media (max-width:760px){
-    /* hero: círculo más chico y la placa de reseñas ya no flota superpuesta ni pisa el "Explorar" */
     .hero{min-height:auto; padding-bottom:5rem;}
-    .hero-visual{max-width:210px; margin:2rem auto 0;}
-    .hero-stats{
-      position:static;
-      margin:1.2rem auto 0;
-      width:fit-content;
-      min-width:0;
-      padding:.8rem 1.2rem;
-      text-align:center;
-    }
-    .hero-stats .num{font-size:1.3rem;}
-    .scroll-cue{display:none;}
   }
   @media (max-width:560px){
     section{padding:5.5rem 0;}
     .foot-top{grid-template-columns:1fr;}
-    .heritage .container{grid-template-columns:1fr 1fr;}
     .test-grid{grid-template-columns:1fr;}
     .barber-card{padding:1.8rem;}
   }
@@ -1157,87 +1016,6 @@
           <a href="#servicios" class="btn btn-ghost">Ver servicios y precios</a>
         </div>
         <p class="hero-note">Av. Manuel Belgrano 3821, Sarandí · Lunes a sábado, 10:00–19:00</p>
-      </div>
-      <div class="hero-visual">
-        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(244,246,250,0.08)" stroke-width="1"/>
-          <circle cx="200" cy="200" r="150" fill="none" stroke="#0057FF" stroke-width="2" stroke-dasharray="15 706" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="18s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="200" cy="200" r="112" fill="none" stroke="rgba(46,143,255,0.25)" stroke-width="1" stroke-dasharray="4 8"/>
-          <g stroke="#2E8FFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M150 260 L230 150"/>
-            <path d="M230 150 C250 145, 262 152, 258 172 C255 188, 238 190, 226 178"/>
-            <circle cx="150" cy="260" r="10"/>
-          </g>
-          <line x1="200" y1="200" x2="200" y2="120" stroke="#F4F6FA" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-          <line x1="200" y1="200" x2="248" y2="200" stroke="#F4F6FA" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-          <circle cx="200" cy="200" r="4" fill="#F4F6FA"/>
-          <text x="200" y="345" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#8B93A7" letter-spacing="2">30 MIN · SESIÓN</text>
-        </svg>
-        <div class="hero-stats">
-          <span class="num">5.0★</span>
-          <span class="lbl">23 reseñas en Google</span>
-        </div>
-      </div>
-    </div>
-    <div class="scroll-cue">
-      <span>Explorar</span>
-      <div class="line"></div>
-    </div>
-  </section>
-
-  <!-- TÉCNICA -->
-  <section class="tecnica" id="tecnica">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">La Técnica</div>
-        <h2>Cuatro pasos, un solo barbero.</h2>
-        <p>Cada turno de 30 minutos sigue la misma secuencia: diagnóstico, corte, definición de barba y detalle final. Nada se apura, nada se salta.</p>
-      </div>
-
-      <div class="rituals reveal-stagger">
-        <div class="ritual reveal">
-          <span class="mark">01</span>
-          <h3>Diagnóstico rápido</h3>
-          <p>Antes de tocar la tijera, se define el estilo según la forma del rostro y el tipo de cabello. Dos minutos que evitan errores.</p>
-        </div>
-        <div class="ritual reveal">
-          <span class="mark">02</span>
-          <h3>Corte de precisión</h3>
-          <p>Tijera y máquina combinadas según la zona, con acabado prolijo en contornos y degradados.</p>
-        </div>
-        <div class="ritual reveal">
-          <span class="mark">03</span>
-          <h3>Barba definida</h3>
-          <p>Perfilado de línea y densidad, ajustado a la forma de la cara para un resultado natural, no genérico.</p>
-        </div>
-        <div class="ritual reveal">
-          <span class="mark">04</span>
-          <h3>Detalle final</h3>
-          <p>Revisión de contornos, producto de cierre y repaso final antes de dejar el sillón.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="heritage">
-      <div class="container">
-        <div class="heritage-item">
-          <div class="num">30'</div>
-          <div class="lbl">Duración de cada turno</div>
-        </div>
-        <div class="heritage-item">
-          <div class="num">1:1</div>
-          <div class="lbl">Un barbero, un cliente</div>
-        </div>
-        <div class="heritage-item">
-          <div class="num">5.0★</div>
-          <div class="lbl">23 reseñas en Google</div>
-        </div>
-        <div class="heritage-item">
-          <div class="num">100%</div>
-          <div class="lbl">Turnos con reserva online</div>
-        </div>
       </div>
     </div>
   </section>
